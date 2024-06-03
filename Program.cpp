@@ -6,28 +6,53 @@
 #include <stdlib.h> 
 #include <string.h>
 
-int currentLinesNum;
-int currentLenghNum;
 
-char** memory;
-int currentLine;
+class Memory
+{
+public:
+    Memory();
+    void freeMemory();
+    int currentLine;
+    int currentLinesNum;
+    int currentLenghNum;
+    int currentLine;
 
-void freeMemory()
+private:
+    int initializeMemory();
+    // make 3d array
+    // or array with action classes
+    char** memory0;
+    char** memory1;
+    char** memory2;
+    char** memory3;
+};
+
+Memory::Memory()
+{
+    int currentLine = 0;
+    int currentLinesNum = 128;
+    int currentLenghNum = 256;
+
+    
+};
+
+void Memory::freeMemory()
 {
     for (int i = 0; i < currentLinesNum; i++)
     {
-        free(memory[i]);
+        free(memory0[i]);
+        free(memory1[i]);
+        free(memory2[i]);
+        free(memory3[i]);
     }
-    free(memory);
+    free(memory0);
+    free(memory1);
+    free(memory2);
+    free(memory3);
 }
 
-
-int initializeMemory()
+int Memory::initializeMemory()
 {
-    currentLine = 0;
-    currentLinesNum = 128;
-    currentLenghNum = 256;
-
     memory = (char**)malloc(currentLinesNum * sizeof(char*));
     if (!memory)
     {
@@ -45,7 +70,6 @@ int initializeMemory()
         }
         memory[i][0] = 0;
     }
-
 }
 
 
