@@ -5,174 +5,16 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
-
-
-class Command
-{
-public:
-    virtual ~Command() {}
-    void Do() {}
-};
-
-class RevertableCommand : public Command
-{
-public:
-    virtual ~RevertableCommand() {}
-    void Do() {};
-    void Undo() {};
-    void Save() {};
-};
-
-
-
-
-
-class Append : public RevertableCommand
-{
-public:
-    Append();
-    ~Append();
-    void Do();
-    void Undo();
-    void Save();
-private:
-    Memory memory;
-};
-
-
-class Memory
-{
-public:
-    Memory();
-    ~Memory();
-
-    int initializeMemory();
-    void freeMemory();
-    int resizeLines();
-    int resizeLength();
-
-    int currentLine;
-    int currentLinesNum;
-    int currentLenghNum;
-    int currentLine;
-
-    char** textMemory;
-    RevertableCommand* commandsMemory;
-
-private:
-    // make 3d array
-    // or array with command classes
-    /*char*** memory;
-    char** memory0;
-    char** memory1;
-    char** memory2;
-    char** memory3;*/
-};
-
-Memory::Memory()
-{
-    int currentLine = 0;
-    int currentLinesNum = 128;
-    int currentLenghNum = 256;
-    initializeMemory();
-};
-
-Memory::~Memory() 
-{
-    freeMemory();
-}
-
-void Memory::freeMemory()
-{
-    for (int i = 0; i < currentLinesNum; i++)
-    {
-        free(textMemory[i]);
-    }
-    free(textMemory);
-    free(commandsMemory);
-}
-
-int Memory::initializeMemory()
-{
-    textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
-    if (!textMemory)
-    {
-        perror(">Memory allocation failed.\n");
-        return 1;
-    }
-    for (int i = 0; i < currentLinesNum; i++)
-    {
-        textMemory[i] = (char*)malloc(currentLenghNum * sizeof(char));
-        if (!textMemory[i])
-        {
-            perror(">Memory allocation failed.\n");
-            freeMemory();
-            return 1;
-        }
-        textMemory[i][0] = 0;
-    }
-}
-
-
-int Memory::resizeLines()
-{
-    int newLinesNum = currentLinesNum * 2;
-    char** newMemory = (char**)realloc(textMemory, newLinesNum * sizeof(char*));
-    if (!newMemory)
-    {
-        perror("Memory reallocation failed");
-        return 1;
-    }
-
-    for (int i = currentLinesNum; i < newLinesNum; i++)
-    {
-        newMemory[i] = (char*)malloc(currentLenghNum * sizeof(char));
-        if (!newMemory[i]) {
-            perror("Memory allocation failed for new lines");
-            return 1;
-        }
-        newMemory[i][0] = '\0';
-    }
-
-    currentLinesNum = newLinesNum;
-    textMemory = newMemory;
-    printf("Line capacity expanded to %d\n", currentLinesNum);
-    return 0;
-}
-
-
-int Memory::resizeLength()
-{
-    int newLengthNum = currentLenghNum * 2;
-    for (int i = 0; i < currentLinesNum; i++)
-    {
-        char* newLine = (char*)malloc(newLengthNum * sizeof(char));
-        strcpy(newLine, textMemory[i]);
-        if (!newLine)
-        {
-            perror("Memory reallocation failed for line resizing");
-            return 1;
-        }
-        textMemory[i] = (char*)malloc(newLengthNum * sizeof(char));
-        strcpy(textMemory[i], newLine);
-        free(newLine);
-    }
-
-    currentLenghNum = newLengthNum;
-    printf("Line length resized to %d\n", currentLenghNum);
-    return 0;
-}
+#include "memlib.h"
 
 
 int main()
 {
-    if (initializeMemory() == 1)
-        return 1;
-
     char command;
-    char* inputBuffer = (char*)malloc(currentLenghNum * sizeof(char));
     FILE* file;
-    char filename[100] = "myfile.txt";
+    char filename[100];
+
+    Memory memory();
 
     do
     {
@@ -182,18 +24,9 @@ int main()
         switch (command)
         {
         case 'a':
-            printf(">Enter text to append: ");
-            (void)scanf(" %[^\n]s", inputBuffer);
-
-            if (strlen(memory[currentLine]) + strlen(inputBuffer) < currentLenghNum)
-            {
-                strcat(memory[currentLine], inputBuffer);
-            }
-            else
-            {
-                resizeLength();
-                strcat(memory[currentLine], inputBuffer);
-            }
+            Append append(memory);
+            append.Do();
+            //Append.Save();
             break;
 
         case 'n':
