@@ -21,6 +21,13 @@ int main()
         printf(">");
         (void)scanf(" %c", &command);
 
+        if (command == 'a') 
+        {
+            Append append(memory);
+            append.Do();
+            //Append.Save();
+        }
+
         switch (command)
         {
         case 'a':

@@ -28,9 +28,9 @@ public:
 class Append : public RevertableCommand
 {
 public:
-    Append(Memory memoryObj)
+    Append(Memory mem)
     {
-        memory = memoryObj;
+        memory = mem;
         line = memory.currentLine;
         text = (char*)malloc(memory.currentLenghNum * sizeof(char));
     }
@@ -38,6 +38,7 @@ public:
     {
         free(text);
     }
+
     void Do();
     void Undo();
     void Save();
@@ -60,5 +61,119 @@ void Append::Do()
     {
         memory.resizeLength();
         strcat(memory.textArray[line], text);
+    }
+}
+
+
+class NewLine : public RevertableCommand 
+{
+public:
+    NewLine(Memory mem) 
+    {
+        memory = mem;
+        line = memory.currentLine + 1;  
+    }
+    ~NewLine();
+
+    void Do();
+    void Undo();
+    void Save();
+private:
+    int line;
+    Memory memory;
+};
+
+void NewLine::Do()
+{
+    printf(">New line started\n");
+    if (line >= memory.currentLinesNum)
+        memory.resizeLines();
+    
+    memory.currentLine = line;
+}
+
+
+class SaveToFile : Command
+{
+public:
+    SaveToFile(Memory mem) 
+    {
+        memory = mem;
+    };
+    ~SaveToFile();
+
+    void Do();
+private:
+    Memory memory;
+    FILE* file;
+    char filename[100];
+};
+
+void SaveToFile::Do()
+{
+    printf(">Enter filename for saving: ");
+    (void)scanf(" %s", filename);
+
+    file = fopen(filename, "w");
+    if (file != NULL)
+    {
+        for (int i = 0; i <= memory.currentLine; i++)
+        {
+            fprintf(file, "%s\n", memory[i]);
+        }
+        fclose(file);
+        printf(">Save successful\n");
+    }
+    else
+    {
+        printf(">Error opening file\n");
+    }
+}
+
+
+class LoadFromFile : Command 
+{
+public:
+    LoadFromFile(Memory mem) 
+    {
+        memory = mem;
+        text = (char*)malloc(memory.currentLenghNum * sizeof(char));
+    };
+    ~LoadFromFile();
+
+    void Do();
+
+private:
+    Memory memory;
+    FILE* file;
+    char filename[100];
+    char* text;
+};
+
+void LoadFromFile::Do() 
+{
+    printf(">Enter filename for loading: ");
+    (void)scanf(" %s", filename);
+
+    file = fopen(filename, "r");
+    if (file != NULL)
+    {
+        memory.currentLine = 0;
+        while (fgets(text, memory.currentLenghNum, file) != NULL)
+        {
+            if (memory.currentLine++ >= memory.currentLinesNum)
+            {
+                memory.resizeLines();
+            }
+            text[strlen(text) - 1] = 0;
+            strcpy(memory[memory.currentLine - 1], text);
+        }
+        fclose(file);
+        memory.currentLine--;
+        printf(">Load successful\n");
+    }
+    else
+    {
+        perror(">Error opening file\n");
     }
 }
