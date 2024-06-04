@@ -7,24 +7,36 @@
 #include <string.h>
 
 
-class ICommand 
+class Command
 {
 public:
-    virtual ~ICommand() {}
-    virtual void Do() = 0;
-    virtual void Undo() = 0;
+    virtual ~Command() {}
+    void Do() {}
+};
+
+class RevertableCommand : public Command
+{
+public:
+    virtual ~RevertableCommand() {}
+    void Do() {};
+    void Undo() {};
+    void Save() {};
 };
 
 
-class Append : public ICommand
+
+
+
+class Append : public RevertableCommand
 {
 public:
     Append();
     ~Append();
     void Do();
     void Undo();
+    void Save();
 private:
-    char** memory;
+    Memory memory;
 };
 
 
@@ -45,7 +57,7 @@ public:
     int currentLine;
 
     char** textMemory;
-    ICommand* commandsMemory;
+    RevertableCommand* commandsMemory;
 
 private:
     // make 3d array
