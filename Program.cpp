@@ -27,6 +27,22 @@ int main()
             append.Do();
             //Append.Save();
         }
+        if (command == 'n') 
+        {
+            NewLine newLine(memory);
+            newLine.Do();
+            //newLine.Save();
+        }
+        if (command == 's') 
+        {
+            SaveToFile saveToFile(memory);
+            saveToFile.Do();
+        }
+        if (command == 'l')
+        {
+            LoadFromFile loadFromFile(memory);
+            loadFromFile.Do();
+        }
 
         switch (command)
         {
