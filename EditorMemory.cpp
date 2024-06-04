@@ -1,52 +1,24 @@
-#define _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_DEPRECATE  
-#define _CRT_NONSTDC_NO_DEPRECATE
+#include "EditorMemory.h"
 
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
-#include "commands.h"
 
-
-class Memory
+EditorMemory::EditorMemory(int lines, int lenght)
 {
-public:
-    Memory()
-    {
-        int currentLine = 0;
-        int currentLinesNum = 128;
-        int currentLenghNum = 256;
-        initializeMemory();
-    }
-    ~Memory()
-    {
-        freeMemory();
-    }
+    currentLine = 0;
+    currentLinesNum = lines;
+    currentLenghNum = lenght;
+    commandsMemory = (RevertableCommand*)malloc(3 * sizeof(RevertableCommand));
+    initializeMemory();
+}
 
-    int initializeMemory();
-    void freeMemory();
-    int resizeLines();
-    int resizeLength();
+EditorMemory::~EditorMemory()
+{
+	freeMemory();
+}
 
-    int currentLine;
-    int currentLinesNum;
-    int currentLenghNum;
-    int currentLine;
-
-    char** textMemory;
-    RevertableCommand* commandsMemory;
-
-private:
-    // make 3d array
-    // or array with command classes
-    /*char*** memory;
-    char** memory0;
-    char** memory1;
-    char** memory2;
-    char** memory3;*/
-};
-
-void Memory::freeMemory()
+void EditorMemory::freeMemory()
 {
     for (int i = 0; i < currentLinesNum; i++)
     {
@@ -56,7 +28,7 @@ void Memory::freeMemory()
     free(commandsMemory);
 }
 
-int Memory::initializeMemory()
+int EditorMemory::initializeMemory()
 {
     textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
     if (!textMemory)
@@ -78,7 +50,7 @@ int Memory::initializeMemory()
 }
 
 
-int Memory::resizeLines()
+int EditorMemory::resizeLines()
 {
     int newLinesNum = currentLinesNum * 2;
     char** newMemory = (char**)realloc(textMemory, newLinesNum * sizeof(char*));
@@ -105,7 +77,7 @@ int Memory::resizeLines()
 }
 
 
-int Memory::resizeLength()
+int EditorMemory::resizeLength()
 {
     int newLengthNum = currentLenghNum * 2;
     for (int i = 0; i < currentLinesNum; i++)

@@ -18,12 +18,30 @@
     <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Command.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Append.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NewLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorMemory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="commands.h">
+    <ClInclude Include="EditorMemory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="memlib.h">
+    <ClInclude Include="RevertableCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Append.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

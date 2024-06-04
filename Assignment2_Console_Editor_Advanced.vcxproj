@@ -127,11 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Append.cpp" />
+    <ClCompile Include="Command.h" />
+    <ClCompile Include="EditorMemory.cpp" />
+    <ClCompile Include="NewLine.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="commands.h" />
-    <ClInclude Include="memlib.h" />
+    <ClInclude Include="Append.h" />
+    <ClInclude Include="EditorMemory.h" />
+    <ClInclude Include="NewLine.h" />
+    <ClInclude Include="RevertableCommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
