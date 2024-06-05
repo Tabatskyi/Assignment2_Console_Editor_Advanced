@@ -129,19 +129,29 @@
   <ItemGroup>
     <ClCompile Include="Append.cpp" />
     <ClCompile Include="Command.h" />
+    <ClCompile Include="Copy.cpp" />
+    <ClCompile Include="Cut.cpp" />
+    <ClCompile Include="Delete.cpp" />
     <ClCompile Include="EditorMemory.cpp" />
     <ClCompile Include="Insert.cpp" />
     <ClCompile Include="LoadFromFile.cpp" />
     <ClCompile Include="NewLine.cpp" />
+    <ClCompile Include="Paste.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Replace.cpp" />
     <ClCompile Include="SaveToFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Append.h" />
+    <ClInclude Include="Copy.h" />
+    <ClInclude Include="Cut.h" />
+    <ClInclude Include="Delete.h" />
     <ClInclude Include="EditorMemory.h" />
     <ClInclude Include="Insert.h" />
     <ClInclude Include="LoadFromFile.h" />
     <ClInclude Include="NewLine.h" />
+    <ClInclude Include="Paste.h" />
+    <ClInclude Include="Replace.h" />
     <ClInclude Include="RevertableCommand.h" />
     <ClInclude Include="SaveToFile.h" />
   </ItemGroup>

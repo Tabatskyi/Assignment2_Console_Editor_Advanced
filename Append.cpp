@@ -13,7 +13,7 @@ Append::Append(EditorMemory* mem, char* input)
 
 Append::~Append() 
 {
-    free(text);
+    //free(text);
 }
 
 void Append::Do()

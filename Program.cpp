@@ -93,12 +93,40 @@ int main()
 
             memory.find(inputBuffer);
         }
+        else if (command == 'd')
+        {
+            //delete
+        }
+        else if (command == 'u')
+        {
+            //undo
+        }
+        else if (command == 'z')
+        {
+            //redo
+        }
+        else if (command == 'x')
+        {
+            //cut
+        }
         else if (command == 'c')
+        {
+            //copy
+        }
+        else if (command == 'v')
+        {
+            //paste
+        }
+		else if (command == 'r')
+		{
+            //replace
+		}
+        else if (command == 'e')
         {
             memory.freeMemory();
             memory.currentLine = 0;
 
-            printf(">Memory cleaned\n");
+            printf(">Memory erased\n");
             
             memory.initializeMemory();
         }

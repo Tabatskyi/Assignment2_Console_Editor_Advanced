@@ -39,6 +39,21 @@
     <ClCompile Include="Insert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Delete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cut.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Copy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Paste.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Replace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorMemory.h">
@@ -60,6 +75,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Insert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Delete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Copy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Paste.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Replace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

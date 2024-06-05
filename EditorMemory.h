@@ -23,6 +23,8 @@ public:
     int currentLenghNum;
 
     char** textMemory;
+    char* clipboard;
     RevertableCommand* commandsMemory;
+
 };
 

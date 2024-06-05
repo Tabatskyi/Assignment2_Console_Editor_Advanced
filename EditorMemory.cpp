@@ -30,6 +30,7 @@ void EditorMemory::freeMemory()
 
 int EditorMemory::initializeMemory()
 {
+    clipboard = (char*)malloc(currentLenghNum * sizeof(char));
     textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
     if (!textMemory)
     {
@@ -45,10 +46,9 @@ int EditorMemory::initializeMemory()
             freeMemory();
             return 1;
         }
-        textMemory[i][0] = 0;
+        textMemory[i][0] = '\0';
     }
 }
-
 
 int EditorMemory::resizeLines()
 {
