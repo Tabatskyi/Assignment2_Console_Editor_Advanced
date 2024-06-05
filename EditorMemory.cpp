@@ -106,3 +106,29 @@ void EditorMemory::print()
 		printf("%d: %s\n", i, textMemory[i]);
 	}
 }
+
+void EditorMemory::find(char* text) 
+{
+    unsigned int position;
+    bool found;
+
+    found = false;
+    for (int i = 0; i <= currentLine; i++)
+    {
+        char* result = strstr(textMemory[i], text);
+
+        position = result - textMemory[i];
+        while (result != NULL)
+        {
+            position = result - textMemory[i];
+            printf(">Found occurrence at %u %u\n", i, position);
+            found = true;
+
+            result = strstr(result + strlen(text), text);
+        }
+    }
+    if (!found)
+    {
+        printf(">No occurrence found\n");
+    }
+}

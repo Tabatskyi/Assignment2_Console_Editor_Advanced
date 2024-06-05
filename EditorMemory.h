@@ -16,6 +16,7 @@ public:
     int resizeLines();
     int resizeLength();
     void print();
+    void find(char* text);
 
     int currentLine; 
     int currentLinesNum;
