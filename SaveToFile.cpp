@@ -22,7 +22,7 @@ void SaveToFile::Do()
     {
         for (int i = 0; i <= memory->currentLine; i++)
         {
-            fprintf(file, "%s\n", memory[i]);
+            fprintf(file, "%s\n", memory->textMemory[i]);
         }
         fclose(file);
         printf(">Save successful\n");

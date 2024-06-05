@@ -9,6 +9,8 @@
 #include "EditorMemory.h"
 #include "Append.h"
 #include "NewLine.h"
+#include "SaveToFile.h"
+#include "LoadFromFile.h"
 
 
 int main()
@@ -37,7 +39,7 @@ int main()
             newLine.Do();
             //newLine.Save();
         }
-        /*if (command == 's')
+        if (command == 's')
         {
             char filename[100];
             printf(">Enter filename for saving: ");
@@ -55,8 +57,8 @@ int main()
         }
         if (command == 'p')
         {
-
-        }*/
+            memory.print();
+        }
 
         //switch (command)
         //{

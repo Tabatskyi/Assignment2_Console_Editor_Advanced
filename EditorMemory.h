@@ -15,6 +15,7 @@ public:
     void freeMemory();
     int resizeLines();
     int resizeLength();
+    void print();
 
     int currentLine; 
     int currentLinesNum;

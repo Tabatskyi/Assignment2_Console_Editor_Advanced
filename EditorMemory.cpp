@@ -98,3 +98,11 @@ int EditorMemory::resizeLength()
     printf("Line length resized to %d\n", currentLenghNum);
     return 0;
 }
+
+void EditorMemory::print()
+{
+	for (int i = 0; i <= currentLine; i++)
+	{
+		printf("%d: %s\n", i, textMemory[i]);
+	}
+}
