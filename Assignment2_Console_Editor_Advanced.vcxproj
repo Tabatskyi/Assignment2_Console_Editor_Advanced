@@ -130,14 +130,18 @@
     <ClCompile Include="Append.cpp" />
     <ClCompile Include="Command.h" />
     <ClCompile Include="EditorMemory.cpp" />
+    <ClCompile Include="LoadFromFile.cpp" />
     <ClCompile Include="NewLine.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="SaveToFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Append.h" />
     <ClInclude Include="EditorMemory.h" />
+    <ClInclude Include="LoadFromFile.h" />
     <ClInclude Include="NewLine.h" />
     <ClInclude Include="RevertableCommand.h" />
+    <ClInclude Include="SaveToFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
