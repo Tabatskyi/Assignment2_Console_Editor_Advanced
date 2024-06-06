@@ -8,7 +8,7 @@
 class EditorMemory
 {
 public:
-    EditorMemory(int lines, int lenght);
+    EditorMemory(int lines, int length);
     ~EditorMemory();
 
     int initializeMemory();
@@ -20,7 +20,7 @@ public:
 
     int currentLine; 
     int currentLinesNum;
-    int currentLenghNum;
+    int currentLengthNum;
 
     char** textMemory;
     char* clipboard;

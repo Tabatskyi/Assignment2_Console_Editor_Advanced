@@ -4,10 +4,10 @@
 #include <stdlib.h> 
 #include <string.h>
 
-SaveToFile::SaveToFile(EditorMemory* mem, char* filen)
+SaveToFile::SaveToFile(EditorMemory* editorMemory, char* filename)
 {
-    memory = mem;
-    filename = filen;
+    memory = editorMemory;
+    this->filename = filename;
 }
 
 SaveToFile::~SaveToFile()

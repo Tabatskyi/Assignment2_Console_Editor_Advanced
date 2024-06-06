@@ -4,11 +4,11 @@
 #include <stdlib.h> 
 #include <string.h>
 
-EditorMemory::EditorMemory(int lines, int lenght)
+EditorMemory::EditorMemory(int lines, int length)
 {
     currentLine = 0;
     currentLinesNum = lines;
-    currentLenghNum = lenght;
+    currentLengthNum = length;
     commandsMemory = (RevertableCommand*)malloc(3 * sizeof(RevertableCommand));
     initializeMemory();
 }
@@ -30,7 +30,7 @@ void EditorMemory::freeMemory()
 
 int EditorMemory::initializeMemory()
 {
-    clipboard = (char*)malloc(currentLenghNum * sizeof(char));
+    clipboard = (char*)malloc(currentLengthNum * sizeof(char));
     textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
     if (!textMemory)
     {
@@ -39,7 +39,7 @@ int EditorMemory::initializeMemory()
     }
     for (int i = 0; i < currentLinesNum; i++)
     {
-        textMemory[i] = (char*)malloc(currentLenghNum * sizeof(char));
+        textMemory[i] = (char*)malloc(currentLengthNum * sizeof(char));
         if (!textMemory[i])
         {
             perror(">Memory allocation failed.\n");
@@ -62,7 +62,7 @@ int EditorMemory::resizeLines()
 
     for (int i = currentLinesNum; i < newLinesNum; i++)
     {
-        newMemory[i] = (char*)malloc(currentLenghNum * sizeof(char));
+        newMemory[i] = (char*)malloc(currentLengthNum * sizeof(char));
         if (!newMemory[i]) {
             perror("Memory allocation failed for new lines");
             return 1;
@@ -79,7 +79,7 @@ int EditorMemory::resizeLines()
 
 int EditorMemory::resizeLength()
 {
-    int newLengthNum = currentLenghNum * 2;
+    int newLengthNum = currentLengthNum * 2;
     for (int i = 0; i < currentLinesNum; i++)
     {
         char* newLine = (char*)malloc(newLengthNum * sizeof(char));
@@ -94,8 +94,8 @@ int EditorMemory::resizeLength()
         free(newLine);
     }
 
-    currentLenghNum = newLengthNum;
-    printf("Line length resized to %d\n", currentLenghNum);
+    currentLengthNum = newLengthNum;
+    printf("Line length resized to %d\n", currentLengthNum);
     return 0;
 }
 

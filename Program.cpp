@@ -12,6 +12,11 @@
 #include "SaveToFile.h"
 #include "LoadFromFile.h"
 #include "Insert.h"
+#include "Delete.h"
+#include "Copy.h"
+#include "Cut.h"
+#include "Paste.h"
+#include "Replace.h"
 
 // known bugs: 
 // insert to empty line cause infinity increase of memory
@@ -30,7 +35,7 @@ int main()
 
         if (command == 'a')
         {
-            char* inputBuffer = (char*)malloc(memory.currentLenghNum * sizeof(char));
+            char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
             printf(">Enter text to append: ");
             (void)scanf(" %[^\n]s", inputBuffer);
             Append append(&memory, inputBuffer);
@@ -66,14 +71,14 @@ int main()
         }
         else if (command == 'i')
         {
-            char* inputBuffer = (char*)malloc(memory.currentLenghNum * sizeof(char));
+            char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
             unsigned int line;
             unsigned int index;
 
             printf(">Choose line and index: ");
             (void)scanf("%u %u", &line, &index);
 
-            if (line >= memory.currentLinesNum || index >= memory.currentLenghNum)
+            if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
             {
                 printf("Error: Index out of range");
             }
@@ -87,7 +92,7 @@ int main()
         }
         else if (command == 'f')
         {
-            char* inputBuffer = (char*)malloc(memory.currentLenghNum * sizeof(char));
+            char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
             printf(">Enter text to search: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
@@ -95,7 +100,21 @@ int main()
         }
         else if (command == 'd')
         {
-            //delete
+            unsigned int line;
+            unsigned int index;
+            unsigned int symbolsCount;
+
+            printf(">Choose line and index: ");
+            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+
+            if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
+			{
+				printf("Error: Index out of range");
+			}
+
+            Delete deleteCommand(&memory, line, index, symbolsCount);
+			deleteCommand.Do();
+			//deleteCommand.Save();
         }
         else if (command == 'u')
         {

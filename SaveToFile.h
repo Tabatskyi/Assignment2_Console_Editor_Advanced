@@ -1,13 +1,11 @@
 #pragma once
 #include "EditorMemory.h"
 #include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
 
 class SaveToFile : Command
 {
 public:
-    SaveToFile(EditorMemory* mem, char* filen);
+    SaveToFile(EditorMemory* editorMemory, char* filename);
     ~SaveToFile();
 
     void Do();

@@ -1,5 +1,5 @@
 #pragma once
-#include "RevertableCommand.h"
+#include "EditorMemory.h"
 class Replace :
     public RevertableCommand
 {

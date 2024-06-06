@@ -4,16 +4,16 @@
 #include <stdlib.h> 
 #include <string.h>
 
-LoadFromFile::LoadFromFile(EditorMemory* mem, char* filen)
+LoadFromFile::LoadFromFile(EditorMemory* editorMemory, char* filename)
 {
-    memory = mem;
-    filename = filen;
-    text = (char*)malloc(memory->currentLenghNum * sizeof(char));
-};
+    memory = editorMemory;
+    this->filename = filename;
+    text = new char[memory->currentLengthNum];
+}
 
 LoadFromFile::~LoadFromFile()
 {
-	free(text);
+    delete[] text;
 }
 
 void LoadFromFile::Do()
@@ -22,7 +22,7 @@ void LoadFromFile::Do()
     if (file != NULL)
     {
         memory->currentLine = 0;
-        while (fgets(text, memory->currentLenghNum, file) != NULL)
+        while (fgets(text, memory->currentLengthNum, file) != NULL)
         {
             if (memory->currentLine++ >= memory->currentLinesNum)
             {

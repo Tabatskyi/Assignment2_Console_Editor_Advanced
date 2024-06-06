@@ -18,7 +18,7 @@ Append::~Append()
 
 void Append::Do()
 {
-    if (strlen(memory->textMemory[line]) + strlen(text) < memory->currentLenghNum)
+    if (strlen(memory->textMemory[line]) + strlen(text) < memory->currentLengthNum)
     {
         strcat(memory->textMemory[line], text);
     }
