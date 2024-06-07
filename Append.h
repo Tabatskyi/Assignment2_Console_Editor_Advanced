@@ -4,14 +4,12 @@
 class Append : public RevertableCommand
 {
 public:
-    Append(EditorMemory* mem, char* input);
+    Append(unsigned int currentLine, char* input);
     ~Append();
 
-    void Do();
-    void Undo();
-    void Save();
+    void Do(EditorMemory* memory);
+    void Undo(EditorMemory* memory);
 private:
-    EditorMemory* memory;
     int line;
     char* text;
 };

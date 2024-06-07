@@ -4,11 +4,10 @@
 #include <stdlib.h> 
 #include <string.h>
 
-Append::Append(EditorMemory* mem, char* input)
+Append::Append(unsigned int currentLine, char* input)
 {
-    memory = mem;
-    line = memory->currentLine;
     text = input;
+    line = currentLine;
 }
 
 Append::~Append() 
@@ -16,8 +15,9 @@ Append::~Append()
     //free(text);
 }
 
-void Append::Do()
+void Append::Do(EditorMemory* memory)
 {
+
     if (strlen(memory->textMemory[line]) + strlen(text) < memory->currentLengthNum)
     {
         strcat(memory->textMemory[line], text);

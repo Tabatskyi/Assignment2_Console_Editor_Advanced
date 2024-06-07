@@ -1,13 +1,13 @@
 #include "Delete.h"
+#include "Insert.h"
 
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
 
 
-Delete::Delete(EditorMemory* editorMemory, unsigned int line, unsigned int index, unsigned int symbolsCount)
+Delete::Delete(unsigned int line, unsigned int index, unsigned int symbolsCount)
 {
-	memory = editorMemory;
 	this->line = line;
 	this->index = index;
 	count = symbolsCount;
@@ -18,7 +18,7 @@ Delete::~Delete()
 {
 }
 
-void Delete::Do()
+void Delete::Do(EditorMemory* memory)
 {
     int currentLengthNum = memory->currentLengthNum;
     int currentLinesNum = memory->currentLinesNum;
@@ -39,4 +39,10 @@ void Delete::Do()
 
     delete[] firstPart;
     delete[] secondPart;
+}
+
+void Delete::Undo(EditorMemory* memory)
+{
+    Insert insert(line, index, deletedText);
+    insert.Do(memory);
 }

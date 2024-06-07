@@ -7,5 +7,4 @@ public:
     virtual ~RevertableCommand() {}
     void Do() {}
     void Undo() {}
-    void Save() {}
 };

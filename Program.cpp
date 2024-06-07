@@ -38,32 +38,32 @@ int main()
             char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
             printf(">Enter text to append: ");
             (void)scanf(" %[^\n]s", inputBuffer);
-            Append append(&memory, inputBuffer);
-            append.Do();
-            //Append.Save();
+            Append append(memory.currentLine, inputBuffer);
+            append.Do(&memory);
+            //Append.Save(&memory);
         }
         else if (command == 'n')
         {
             printf(">New line started\n");
-            NewLine newLine(&memory);
-            newLine.Do();
-            //newLine.Save();
+            NewLine newLine(memory.currentLine);
+            newLine.Do(&memory);
+            //newLine.Save(&memory);
         }
         else if (command == 's')
         {
             char filename[100];
             printf(">Enter filename for saving: ");
             (void)scanf(" %s", filename);
-            SaveToFile saveToFile(&memory, filename);
-            saveToFile.Do();
+            SaveToFile saveToFile(filename);
+            saveToFile.Do(&memory);
         }
         else if (command == 'l')
         {
             char filename[100];
             printf(">Enter filename for loading: ");
             (void)scanf(" %s", filename);
-            LoadFromFile loadFromFile(&memory, filename);
-            loadFromFile.Do();
+            LoadFromFile loadFromFile(filename);
+            loadFromFile.Do(&memory);
         }
         else if (command == 'p')
         {
@@ -86,8 +86,8 @@ int main()
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
-            Insert insert(&memory, line, index, inputBuffer);
-            insert.Do();
+            Insert insert(line, index, inputBuffer);
+            insert.Do(&memory);
             //insert.Save();
         }
         else if (command == 'f')
@@ -112,9 +112,9 @@ int main()
 				printf("Error: Index out of range");
 			}
 
-            Delete deleteCommand(&memory, line, index, symbolsCount);
-			deleteCommand.Do();
-			//deleteCommand.Save();
+            Delete deleteCommand(line, index, symbolsCount);
+			deleteCommand.Do(&memory);
+            //memory.saveCommand(&deleteCommand);
         }
         else if (command == 'u')
         {

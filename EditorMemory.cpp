@@ -82,7 +82,8 @@ int EditorMemory::resizeLength()
     int newLengthNum = currentLengthNum * 2;
     for (int i = 0; i < currentLinesNum; i++)
     {
-        char* newLine = (char*)malloc(newLengthNum * sizeof(char));
+        char* newLine = (char*)calloc(newLengthNum, sizeof(char));
+
         strcpy(newLine, textMemory[i]);
         if (!newLine)
         {

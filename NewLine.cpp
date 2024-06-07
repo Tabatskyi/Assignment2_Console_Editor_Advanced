@@ -1,9 +1,8 @@
 #include "NewLine.h"
 
-NewLine::NewLine(EditorMemory* mem)
+NewLine::NewLine(unsigned int currentLine)
 {
-    memory = mem;
-    line = memory->currentLine + 1;
+    line = currentLine + 1;
 }
 
 NewLine::~NewLine()
@@ -11,7 +10,7 @@ NewLine::~NewLine()
 
 }
 
-void NewLine::Do()
+void NewLine::Do(EditorMemory* memory)
 {
     if (line >= memory->currentLinesNum)
         memory->resizeLines();

@@ -5,12 +5,11 @@
 class SaveToFile : Command
 {
 public:
-    SaveToFile(EditorMemory* editorMemory, char* filename);
+    SaveToFile(char* filename);
     ~SaveToFile();
 
-    void Do();
+    void Do(EditorMemory* memory);
 private:
-    EditorMemory* memory;
     FILE* file;
     char* filename;
 };

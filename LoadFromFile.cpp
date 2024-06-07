@@ -4,21 +4,21 @@
 #include <stdlib.h> 
 #include <string.h>
 
-LoadFromFile::LoadFromFile(EditorMemory* editorMemory, char* filename)
+LoadFromFile::LoadFromFile(char* filename)
 {
-    memory = editorMemory;
     this->filename = filename;
-    text = new char[memory->currentLengthNum];
 }
 
 LoadFromFile::~LoadFromFile()
 {
-    delete[] text;
+    delete[] filename;
 }
 
-void LoadFromFile::Do()
+void LoadFromFile::Do(EditorMemory* memory)
 {
-    file = fopen(filename, "r");
+    char* text = new char[memory->currentLengthNum];
+    FILE* file = fopen(filename, "r");
+
     if (file != NULL)
     {
         memory->currentLine = 0;

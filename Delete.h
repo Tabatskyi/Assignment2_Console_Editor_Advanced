@@ -3,14 +3,12 @@
 class Delete : public RevertableCommand
 {
 public:
-	Delete(EditorMemory* editorMemory, unsigned int line, unsigned int index, unsigned int symbolsCount);
+	Delete(unsigned int line, unsigned int index, unsigned int symbolsCount);
 	~Delete();
 
-	void Do();
-	void Undo();
-	void Save();
+	void Do(EditorMemory* memory);
+	void Undo(EditorMemory* memory);
 private:
-	EditorMemory* memory;
 	unsigned int line;
 	unsigned int index;
 	unsigned int count;

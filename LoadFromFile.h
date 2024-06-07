@@ -8,14 +8,10 @@
 class LoadFromFile : Command
 {
 public:
-    LoadFromFile(EditorMemory* editorMemory, char* filename);
+    LoadFromFile(char* filename);
     ~LoadFromFile();
 
-    void Do();
-
+    void Do(EditorMemory* memory);
 private:
-    EditorMemory* memory;
-    FILE* file;
     char* filename;
-    char* text;
 };

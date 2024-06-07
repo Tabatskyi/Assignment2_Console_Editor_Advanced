@@ -15,12 +15,13 @@ public:
     void freeMemory();
     int resizeLines();
     int resizeLength();
+    void saveCommand(RevertableCommand command);
     void print();
     void find(char* text);
 
-    int currentLine; 
-    int currentLinesNum;
-    int currentLengthNum;
+    unsigned int currentLine; 
+    unsigned int currentLinesNum;
+    unsigned int currentLengthNum;
 
     char** textMemory;
     char* clipboard;

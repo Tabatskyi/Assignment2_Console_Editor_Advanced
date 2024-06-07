@@ -4,14 +4,12 @@
 class Insert : public RevertableCommand
 {
 public:
-	Insert(EditorMemory* editorMemory, int line, int column, const char* input);
+	Insert(int line, int column, const char* input);
 	~Insert();
 
-	void Do();
-	void Undo();
-	void Save();
+	void Do(EditorMemory* memory);
+	void Undo(EditorMemory* memory);
 private:
-	EditorMemory* memory;
 	unsigned int line;
 	unsigned int index; 
 	char* text;

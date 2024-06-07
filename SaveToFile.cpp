@@ -4,9 +4,8 @@
 #include <stdlib.h> 
 #include <string.h>
 
-SaveToFile::SaveToFile(EditorMemory* editorMemory, char* filename)
+SaveToFile::SaveToFile(char* filename)
 {
-    memory = editorMemory;
     this->filename = filename;
 }
 
@@ -15,7 +14,7 @@ SaveToFile::~SaveToFile()
     free(file);
 }
 
-void SaveToFile::Do()
+void SaveToFile::Do(EditorMemory* memory)
 {
     file = fopen(filename, "w");
     if (file != NULL)

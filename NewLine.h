@@ -4,12 +4,11 @@
 class NewLine : public RevertableCommand
 {
 public:
-    NewLine(EditorMemory* mem);
+    NewLine(unsigned int currentLine);
     ~NewLine();
 
-    void Do();
-    void Undo();
-    void Save();
+    void Do(EditorMemory* memory);
+    void Undo(EditorMemory* memory);
 private:
     int line;
     EditorMemory* memory;
