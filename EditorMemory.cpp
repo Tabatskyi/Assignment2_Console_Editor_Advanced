@@ -9,7 +9,7 @@ EditorMemory::EditorMemory(int lines, int length)
     currentLine = 0;
     currentLinesNum = lines;
     currentLengthNum = length;
-    commandsMemory = (RevertableCommand**)calloc(3, sizeof(RevertableCommand));
+    commandsMemory = new RevertableCommand*[3];
     initializeMemory();
 }
 
@@ -90,7 +90,7 @@ int EditorMemory::resizeLength()
             perror("Memory reallocation failed for line resizing");
             return 1;
         }
-        textMemory[i] = (char*)malloc(newLengthNum * sizeof(char));
+        textMemory[i] = (char*)calloc(newLengthNum, sizeof(char));
         strcpy(textMemory[i], newLine);
         free(newLine);
     }
