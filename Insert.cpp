@@ -14,7 +14,12 @@ Insert::Insert(int line, int column, const char* input)
     strcpy(text, input);
 }
 
-void Insert::Do(EditorMemory* memory)
+Insert::~Insert()
+{
+    delete[] text;
+}
+
+void Insert::Do(Memory* memory)
 {
     int currentLengthNum = memory->currentLengthNum;
     int currentLinesNum = memory->currentLinesNum;
@@ -36,7 +41,7 @@ void Insert::Do(EditorMemory* memory)
     delete[] secondPart;
 }
 
-void Insert::Undo(EditorMemory* memory)
+void Insert::Undo(Memory* memory)
 {
 	Delete deleteCommand(line, index, strlen(text));
 	deleteCommand.Do(memory);

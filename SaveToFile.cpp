@@ -14,7 +14,7 @@ SaveToFile::~SaveToFile()
     free(file);
 }
 
-void SaveToFile::Do(EditorMemory* memory)
+void SaveToFile::Do(Memory* memory)
 {
     file = fopen(filename, "w");
     if (file != NULL)

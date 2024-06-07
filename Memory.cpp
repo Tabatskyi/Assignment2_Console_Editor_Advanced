@@ -1,6 +1,6 @@
-#include "BasicLib.h"
+#include "Memory.h"
 
-EditorMemory::EditorMemory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize)
+Memory::Memory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize)
 {
     currentLine = 0;
     currentLinesNum = lines;
@@ -11,12 +11,12 @@ EditorMemory::EditorMemory(unsigned int lines, unsigned int length, unsigned int
     initializeCommandsMemory();
 }
 
-EditorMemory::~EditorMemory()
+Memory::~Memory()
 {
 	freeMemory();
 }
 
-void EditorMemory::freeMemory()
+void Memory::freeMemory()
 {
     for (unsigned int i = 0; i < currentLinesNum; i++)
     {
@@ -26,7 +26,7 @@ void EditorMemory::freeMemory()
     free(commandsMemory);
 }
 
-int EditorMemory::initializeMemory()
+int Memory::initializeMemory()
 {
     textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
     if (!textMemory)
@@ -47,7 +47,7 @@ int EditorMemory::initializeMemory()
     }
 }
 
-int EditorMemory::initializeCommandsMemory()
+int Memory::initializeCommandsMemory()
 {
     commandsMemory = new RevertableCommand * [commandsMemorySize];
     if (!commandsMemory)
@@ -63,7 +63,7 @@ int EditorMemory::initializeCommandsMemory()
 }
 
 
-int EditorMemory::resizeLines()
+int Memory::resizeLines()
 {
     unsigned int newLinesNum = currentLinesNum * 2;
     char** newMemory = (char**)realloc(textMemory, newLinesNum * sizeof(char*));
@@ -90,7 +90,7 @@ int EditorMemory::resizeLines()
 }
 
 
-int EditorMemory::resizeLength()
+int Memory::resizeLength()
 {
     unsigned int newLengthNum = currentLengthNum * 2;
     for (unsigned int i = 0; i < currentLinesNum; i++)
@@ -113,7 +113,7 @@ int EditorMemory::resizeLength()
     return 0;
 }
 
-void EditorMemory::print()
+void Memory::print()
 {
 	for (unsigned int i = 0; i <= currentLine; i++)
 	{
@@ -121,7 +121,7 @@ void EditorMemory::print()
 	}
 }
 
-void EditorMemory::find(char* text) 
+void Memory::find(char* text) 
 {
     unsigned int position;
     bool found;
@@ -147,7 +147,7 @@ void EditorMemory::find(char* text)
     }
 }
 
-void EditorMemory::printCommands() 
+void Memory::printCommands() 
 {
     std::cout << "Current commands in memory:" << std::endl;
     for (unsigned int i = 0; i < commandsMemorySize; i++) 
@@ -159,7 +159,7 @@ void EditorMemory::printCommands()
     }
 }
 
-void EditorMemory::saveCommand(RevertableCommand* command)
+void Memory::saveCommand(RevertableCommand* command)
 {
     std::cout << "Saving command: " << command << std::endl;
     delete[] commandsMemory[0];
@@ -172,7 +172,7 @@ void EditorMemory::saveCommand(RevertableCommand* command)
     commandsMemory[commandsMemorySize - 1] = command;
     printCommands();
 }
-void EditorMemory::createClipboard(unsigned int size) 
+void Memory::createClipboard(unsigned int size) 
 {
     if (clipboard) 
         delete[] clipboard;

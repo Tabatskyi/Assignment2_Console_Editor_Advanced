@@ -1,13 +1,14 @@
 #pragma once
-#include "BasicLib.h"
+#include "Memory.h"
 
 class NewLine : public RevertableCommand
 {
 public:
     NewLine(unsigned int currentLine);
+    ~NewLine();
 
-    void Do(EditorMemory* memory);
-    void Undo(EditorMemory* memory);
+    void Do(Memory* memory);
+    void Undo(Memory* memory);
 private:
     int line;
 };

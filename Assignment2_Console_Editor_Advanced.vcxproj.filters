@@ -18,16 +18,13 @@
     <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Append.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NewLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EditorMemory.cpp">
+    <ClCompile Include="Memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SaveToFile.cpp">
@@ -56,10 +53,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EditorMemory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicLib.h">
+    <ClInclude Include="RevertableCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Append.h">
@@ -90,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Replace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">

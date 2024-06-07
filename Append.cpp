@@ -10,7 +10,7 @@ Append::Append(unsigned int currentLine, char* input)
     line = currentLine;
 }
 
-void Append::Do(EditorMemory* memory)
+void Append::Do(Memory* memory)
 {
 
     if (strlen(memory->textMemory[line]) + strlen(text) < memory->currentLengthNum)
@@ -22,4 +22,9 @@ void Append::Do(EditorMemory* memory)
         memory->resizeLength();
         strcat(memory->textMemory[line], text);
     }
+}
+
+void Append::Undo(Memory* memory)
+{
+	memory->textMemory[line][strlen(memory->textMemory[line]) - strlen(text)] = '\0';
 }

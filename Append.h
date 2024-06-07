@@ -1,13 +1,13 @@
 #pragma once
-#include "BasicLib.h"
+#include "Memory.h"
 
 class Append : public RevertableCommand
 {
 public:
     Append(unsigned int currentLine, char* input);
 
-    void Do(EditorMemory* memory);
-    void Undo(EditorMemory* memory);
+    void Do(Memory* memory);
+    void Undo(Memory* memory);
 private:
     int line;
     char* text;

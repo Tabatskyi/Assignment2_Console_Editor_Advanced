@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "BasicLib.h"
+#include "Memory.h"
 #include "Append.h"
 #include "NewLine.h"
 #include "SaveToFile.h"
@@ -28,7 +28,7 @@
 int main()
 {
     char command;
-    EditorMemory memory(128, 256, 3);
+    Memory memory(128, 256, 3);
     unsigned int undoStep = 1;
 
     do
@@ -41,32 +41,32 @@ int main()
             char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
             printf(">Enter text to append: ");
             (void)scanf(" %[^\n]s", inputBuffer);
-            Append append(memory.currentLine, inputBuffer);
-            append.Do(&memory);
-            //Append.Save(&memory);
+            Append* append = new Append(memory.currentLine, inputBuffer);
+            append->Do(&memory);
+            memory.saveCommand(append);
         }
         else if (command == 'n')
         {
             printf(">New line started\n");
-            NewLine newLine(memory.currentLine);
-            newLine.Do(&memory);
-            //newLine.Save(&memory);
+            NewLine* newLine = new NewLine(memory.currentLine);
+            newLine->Do(&memory);
+            memory.saveCommand(newLine);
         }
         else if (command == 's')
         {
             char filename[100];
             printf(">Enter filename for saving: ");
             (void)scanf(" %s", filename);
-            SaveToFile saveToFile(filename);
-            saveToFile.Do(&memory);
+            SaveToFile* saveToFile = new SaveToFile(filename);
+            saveToFile->Do(&memory);
         }
         else if (command == 'l')
         {
             char filename[100];
             printf(">Enter filename for loading: ");
             (void)scanf(" %s", filename);
-            LoadFromFile loadFromFile(filename);
-            loadFromFile.Do(&memory);
+            LoadFromFile* loadFromFile = new LoadFromFile(filename);
+            loadFromFile->Do(&memory);
         }
         else if (command == 'p')
         {
@@ -88,9 +88,9 @@ int main()
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
-            Insert insert(line, index, inputBuffer);
-            insert.Do(&memory);
-            //insert.Save();
+            Insert* insert = new Insert(line, index, inputBuffer);
+            insert->Do(&memory);
+            memory.saveCommand(insert);
         }
         else if (command == 'f')
         {

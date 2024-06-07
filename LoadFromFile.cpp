@@ -14,7 +14,7 @@ LoadFromFile::~LoadFromFile()
     delete[] filename;
 }
 
-void LoadFromFile::Do(EditorMemory* memory)
+void LoadFromFile::Do(Memory* memory)
 {
     char* text = new char[memory->currentLengthNum];
     FILE* file = fopen(filename, "r");

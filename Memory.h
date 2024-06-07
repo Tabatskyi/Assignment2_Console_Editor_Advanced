@@ -1,20 +1,22 @@
 #pragma once
+#include "RevertableCommand.h"
 
 class Memory
 {
 public:
-    virtual ~Memory() = 0;
+    Memory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize);
+    ~Memory();
 
-    virtual int initializeMemory() = 0;
-    virtual int initializeCommandsMemory() = 0;
-    virtual void printCommands() = 0;
-    virtual void freeMemory() = 0;
-    virtual int resizeLines() = 0;
-    virtual int resizeLength() = 0;
-    virtual void saveCommand(RevertableCommand* command) = 0;
-    virtual void print() = 0;
-    virtual void find(char* text) = 0;
-    virtual void createClipboard(unsigned int size) = 0;
+    int initializeMemory();
+    int initializeCommandsMemory();
+    void printCommands();
+    void freeMemory();
+    int resizeLines();
+    int resizeLength();
+    void saveCommand(RevertableCommand* command);
+    void print();
+    void find(char* text);
+    void createClipboard(unsigned int size);
 
     unsigned int currentLine;
     unsigned int currentLinesNum;

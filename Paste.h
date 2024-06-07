@@ -1,5 +1,5 @@
 #pragma once
-#include "EditorMemory.h"
+#include "Memory.h"
 class Paste :
     public RevertableCommand
 {

@@ -1,5 +1,6 @@
 #pragma once
-#include "BasicLib.h"
+#include "Memory.h"
+
 
 class SaveToFile : Command
 {
@@ -7,7 +8,7 @@ public:
     SaveToFile(char* filename);
     ~SaveToFile();
 
-    void Do(EditorMemory* memory);
+    void Do(Memory* memory);
 private:
     FILE* file;
     char* filename;
