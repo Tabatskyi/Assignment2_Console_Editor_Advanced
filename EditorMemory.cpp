@@ -53,24 +53,19 @@ int EditorMemory::initializeMemory()
 
 int EditorMemory::initializeCommandsMemory()
 {
-    commandsMemory = (RevertableCommand**)calloc(currentLinesNum, sizeof(RevertableCommand*));
-    
+    commandsMemory = new RevertableCommand * [commandsMemorySize];
     if (!commandsMemory)
     {
         perror(">Memory allocation failed.\n");
         return 1;
     }
-    for (unsigned int i = 0; i < currentLinesNum; i++)
+    for (unsigned int i = 0; i < commandsMemorySize; i++)
     {
-        commandsMemory[i] = (RevertableCommand*)calloc(currentLengthNum, sizeof(RevertableCommand));
-        if (!commandsMemory[i])
-        {
-            perror(">Memory allocation failed.\n");
-            freeMemory();
-            return 1;
-        }
+        commandsMemory[i] = nullptr;
     }
+    return 0; 
 }
+
 
 int EditorMemory::resizeLines()
 {
@@ -158,15 +153,13 @@ void EditorMemory::find(char* text)
 
 void EditorMemory::saveCommand(RevertableCommand* command) 
 {
-    RevertableCommand** newCommandsMemory = new RevertableCommand * [commandsMemorySize];
+    delete[] commandsMemory[0];
 
-    for (unsigned int i = 0; i < commandsMemorySize - 1; i++)
-        newCommandsMemory[i] = commandsMemory[i + 1];
+    for (unsigned int i = 1; i < commandsMemorySize; i++) {
+        commandsMemory[i - 1] = commandsMemory[i];
+    }
 
-    newCommandsMemory[commandsMemorySize - 1] = command;
-
-    free(commandsMemory);
-    commandsMemory = newCommandsMemory;
+    commandsMemory[commandsMemorySize - 1] = command;
 }
 
 void EditorMemory::createClipboard(unsigned int size) 

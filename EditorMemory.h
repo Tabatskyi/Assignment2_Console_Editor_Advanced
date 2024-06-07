@@ -13,6 +13,7 @@ public:
 
     int initializeMemory();
     int initializeCommandsMemory();
+    int initializeNewCommandsMemory();
     void freeMemory();
     int resizeLines();
     int resizeLength();
@@ -29,6 +30,7 @@ public:
     char** textMemory;
     char* clipboard;
     RevertableCommand** commandsMemory;
+    RevertableCommand** newCommandsMemory;
     
 };
 
