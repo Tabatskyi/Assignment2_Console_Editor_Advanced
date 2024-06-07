@@ -1,13 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_DEPRECATE  
-#define _CRT_NONSTDC_NO_DEPRECATE
-
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-
-#include <iostream>
-
 #include "Memory.h"
 #include "Append.h"
 #include "NewLine.h"
@@ -29,7 +19,6 @@ int main()
 {
     char command;
     Memory memory(128, 256, 3);
-    unsigned int undoStep = 1;
 
     do
     {
@@ -121,17 +110,25 @@ int main()
         else if (command == 'u')
         {
             unsigned int size = memory.commandsMemorySize;
-            memory.printCommands();
-            RevertableCommand* udoingCommand = memory.commandsMemory[size - undoStep];
-            std::cout << "Undoing command: " << udoingCommand << std::endl;
-            udoingCommand->Undo(&memory);
-            undoStep++;
+
+            if (memory.undoStep >= size)
+            {
+				printf(">No more commands to undo\n");
+				continue;
+			}
+            memory.commandsMemory[size - memory.undoStep]->Undo(&memory);
+            memory.undoStep++;
         }
         else if (command == 'z')
         {
-            undoStep--;
+            memory.undoStep--;
             unsigned int size = memory.commandsMemorySize;
-            memory.commandsMemory[size - undoStep]->Do(&memory);
+            if (memory.undoStep == 0)
+			{
+				printf(">No more commands to redo\n");
+				continue;
+			}
+            memory.commandsMemory[size - memory.undoStep]->Do(&memory);
         }
         else if (command == 'x')
         {

@@ -18,10 +18,7 @@ public:
     void find(char* text);
     void createClipboard(unsigned int size);
 
-    unsigned int currentLine;
-    unsigned int currentLinesNum;
-    unsigned int currentLengthNum;
-    unsigned int commandsMemorySize;
+    unsigned int currentLine, currentLinesNum, currentLengthNum, commandsMemorySize, undoStep;
 
     char** textMemory;
     char* clipboard;

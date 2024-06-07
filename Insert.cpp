@@ -1,9 +1,6 @@
 #include "Insert.h"
 #include "Delete.h"
 
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
 
 
 Insert::Insert(int line, int column, const char* input)

@@ -1,8 +1,5 @@
 #include "LoadFromFile.h"
 
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
 
 LoadFromFile::LoadFromFile(char* filename)
 {

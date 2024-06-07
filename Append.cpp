@@ -1,9 +1,5 @@
 #include "Append.h"
 
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-
 Append::Append(unsigned int currentLine, char* input)
 {
     text = input;

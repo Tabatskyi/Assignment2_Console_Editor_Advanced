@@ -1,10 +1,6 @@
 #include "Delete.h"
 #include "Insert.h"
 
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-
 
 Delete::Delete(unsigned int line, unsigned int index, unsigned int symbolsCount)
 {

@@ -1,9 +1,5 @@
 #include "SaveToFile.h"
 
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-
 SaveToFile::SaveToFile(char* filename)
 {
     this->filename = filename;
