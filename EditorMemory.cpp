@@ -1,8 +1,4 @@
-#include "EditorMemory.h"
-
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
+#include "BasicLib.h"
 
 EditorMemory::EditorMemory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize)
 {
@@ -151,22 +147,35 @@ void EditorMemory::find(char* text)
     }
 }
 
-void EditorMemory::saveCommand(RevertableCommand* command) 
+void EditorMemory::printCommands() 
 {
+    std::cout << "Current commands in memory:" << std::endl;
+    for (unsigned int i = 0; i < commandsMemorySize; i++) 
+    {
+        if (commandsMemory[i] != nullptr) 
+           std::cout << i << ": Command at " << commandsMemory[i] << std::endl;
+        else 
+           std::cout << i << ": [Empty]" << std::endl;
+    }
+}
+
+void EditorMemory::saveCommand(RevertableCommand* command)
+{
+    std::cout << "Saving command: " << command << std::endl;
     delete[] commandsMemory[0];
 
     for (unsigned int i = 1; i < commandsMemorySize; i++) 
+    {
         commandsMemory[i - 1] = commandsMemory[i];
+    }
 
     commandsMemory[commandsMemorySize - 1] = command;
+    printCommands();
 }
-
 void EditorMemory::createClipboard(unsigned int size) 
 {
     if (clipboard) 
-    {
-        delete clipboard;
-    }
+        delete[] clipboard;
 
     clipboard = new char[size];
 }

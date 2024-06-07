@@ -6,7 +6,9 @@
 #include <stdlib.h> 
 #include <string.h>
 
-#include "EditorMemory.h"
+#include <iostream>
+
+#include "BasicLib.h"
 #include "Append.h"
 #include "NewLine.h"
 #include "SaveToFile.h"
@@ -27,7 +29,7 @@ int main()
 {
     char command;
     EditorMemory memory(128, 256, 3);
-    unsigned int undoStep = 0;
+    unsigned int undoStep = 1;
 
     do
     {
@@ -119,7 +121,10 @@ int main()
         else if (command == 'u')
         {
             unsigned int size = memory.commandsMemorySize;
-            memory.commandsMemory[size - undoStep]->Undo(&memory);
+            memory.printCommands();
+            RevertableCommand* udoingCommand = memory.commandsMemory[size - undoStep];
+            std::cout << "Undoing command: " << udoingCommand << std::endl;
+            udoingCommand->Undo(&memory);
             undoStep++;
         }
         else if (command == 'z')

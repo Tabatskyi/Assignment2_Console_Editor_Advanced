@@ -4,5 +4,6 @@ class Command
 {
 public:
     virtual ~Command() = default;
-    void Do() {}
+    virtual void Do() = 0;
 };
+

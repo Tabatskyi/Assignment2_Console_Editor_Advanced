@@ -1,6 +1,5 @@
 #pragma once
-#include "EditorMemory.h"
-#include <stdio.h>
+#include "BasicLib.h"
 
 class SaveToFile : Command
 {

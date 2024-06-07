@@ -59,7 +59,7 @@
     <ClInclude Include="EditorMemory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RevertableCommand.h">
+    <ClInclude Include="BasicLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Append.h">

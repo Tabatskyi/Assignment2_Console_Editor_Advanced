@@ -1,4 +1,5 @@
 #include "Insert.h"
+#include "Delete.h"
 
 #include <stdio.h>
 #include <stdlib.h> 
@@ -33,4 +34,10 @@ void Insert::Do(EditorMemory* memory)
 
     delete[] firstPart;
     delete[] secondPart;
+}
+
+void Insert::Undo(EditorMemory* memory)
+{
+	Delete deleteCommand(line, index, strlen(text));
+	deleteCommand.Do(memory);
 }

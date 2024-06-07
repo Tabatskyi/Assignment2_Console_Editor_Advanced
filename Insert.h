@@ -1,5 +1,5 @@
 #pragma once
-#include "EditorMemory.h"
+#include "BasicLib.h"
 
 class Insert : public RevertableCommand
 {

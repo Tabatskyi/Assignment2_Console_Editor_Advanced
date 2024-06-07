@@ -19,7 +19,7 @@ Delete::~Delete()
     delete[] deletedText;
 }
 
-void Delete::Do(EditorMemory* memory) 
+void Delete::Do(EditorMemory* memory)
 {
     char* lineText = memory->textMemory[line];
     unsigned int lineLength = strlen(lineText);
@@ -35,6 +35,7 @@ void Delete::Do(EditorMemory* memory)
 
 void Delete::Undo(EditorMemory* memory)
 {
+    printf("Undo delete\n");
     Insert insert(line, index, deletedText);
     insert.Do(memory);
 }
