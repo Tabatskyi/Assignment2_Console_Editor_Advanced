@@ -5,13 +5,11 @@ class NewLine : public RevertableCommand
 {
 public:
     NewLine(unsigned int currentLine);
-    ~NewLine();
 
     void Do(EditorMemory* memory);
     void Undo(EditorMemory* memory);
 private:
     int line;
-    EditorMemory* memory;
 };
 
 

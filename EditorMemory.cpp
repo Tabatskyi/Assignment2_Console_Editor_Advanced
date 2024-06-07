@@ -9,7 +9,7 @@ EditorMemory::EditorMemory(int lines, int length)
     currentLine = 0;
     currentLinesNum = lines;
     currentLengthNum = length;
-    commandsMemory = (RevertableCommand*)malloc(3 * sizeof(RevertableCommand));
+    commandsMemory = (RevertableCommand**)calloc(3, sizeof(RevertableCommand));
     initializeMemory();
 }
 

@@ -5,7 +5,6 @@ class Append : public RevertableCommand
 {
 public:
     Append(unsigned int currentLine, char* input);
-    ~Append();
 
     void Do(EditorMemory* memory);
     void Undo(EditorMemory* memory);

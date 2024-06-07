@@ -10,11 +10,6 @@ Append::Append(unsigned int currentLine, char* input)
     line = currentLine;
 }
 
-Append::~Append() 
-{
-    //free(text);
-}
-
 void Append::Do(EditorMemory* memory)
 {
 

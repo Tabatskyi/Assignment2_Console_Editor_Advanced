@@ -4,7 +4,7 @@
 class RevertableCommand : public Command
 {
 public:
-    virtual ~RevertableCommand() {}
+    virtual ~RevertableCommand() = default;
     void Do() {}
     void Undo() {}
 };

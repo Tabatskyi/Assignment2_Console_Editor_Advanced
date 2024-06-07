@@ -15,7 +15,7 @@ public:
     void freeMemory();
     int resizeLines();
     int resizeLength();
-    void saveCommand(RevertableCommand command);
+    void saveCommand(RevertableCommand* command);
     void print();
     void find(char* text);
 
@@ -25,7 +25,6 @@ public:
 
     char** textMemory;
     char* clipboard;
-    RevertableCommand* commandsMemory;
-
+    RevertableCommand** commandsMemory;
 };
 

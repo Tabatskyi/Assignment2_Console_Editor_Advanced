@@ -13,11 +13,6 @@ Insert::Insert(int line, int column, const char* input)
     strcpy(text, input);
 }
 
-Insert::~Insert()
-{
-    delete[] text;
-}
-
 void Insert::Do(EditorMemory* memory)
 {
     int currentLengthNum = memory->currentLengthNum;

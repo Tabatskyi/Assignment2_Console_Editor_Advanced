@@ -14,10 +14,6 @@ Delete::Delete(unsigned int line, unsigned int index, unsigned int symbolsCount)
 	deletedText = new char[count];
 }
 
-Delete::~Delete()
-{
-}
-
 void Delete::Do(EditorMemory* memory)
 {
     int currentLengthNum = memory->currentLengthNum;
