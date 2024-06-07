@@ -4,13 +4,15 @@
 #include <stdlib.h> 
 #include <string.h>
 
-EditorMemory::EditorMemory(int lines, int length)
+EditorMemory::EditorMemory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize)
 {
     currentLine = 0;
     currentLinesNum = lines;
     currentLengthNum = length;
-    commandsMemory = new RevertableCommand*[3];
+    this->commandsMemorySize = commandsMemorySize;
+ 
     initializeMemory();
+    initializeCommandsMemory();
 }
 
 EditorMemory::~EditorMemory()
@@ -20,7 +22,7 @@ EditorMemory::~EditorMemory()
 
 void EditorMemory::freeMemory()
 {
-    for (int i = 0; i < currentLinesNum; i++)
+    for (unsigned int i = 0; i < currentLinesNum; i++)
     {
         free(textMemory[i]);
     }
@@ -30,14 +32,13 @@ void EditorMemory::freeMemory()
 
 int EditorMemory::initializeMemory()
 {
-    clipboard = (char*)malloc(currentLengthNum * sizeof(char));
     textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
     if (!textMemory)
     {
         perror(">Memory allocation failed.\n");
         return 1;
     }
-    for (int i = 0; i < currentLinesNum; i++)
+    for (unsigned int i = 0; i < currentLinesNum; i++)
     {
         textMemory[i] = (char*)malloc(currentLengthNum * sizeof(char));
         if (!textMemory[i])
@@ -50,9 +51,30 @@ int EditorMemory::initializeMemory()
     }
 }
 
+int EditorMemory::initializeCommandsMemory()
+{
+    commandsMemory = (RevertableCommand**)calloc(currentLinesNum, sizeof(RevertableCommand*));
+    
+    if (!commandsMemory)
+    {
+        perror(">Memory allocation failed.\n");
+        return 1;
+    }
+    for (unsigned int i = 0; i < currentLinesNum; i++)
+    {
+        commandsMemory[i] = (RevertableCommand*)calloc(currentLengthNum, sizeof(RevertableCommand));
+        if (!commandsMemory[i])
+        {
+            perror(">Memory allocation failed.\n");
+            freeMemory();
+            return 1;
+        }
+    }
+}
+
 int EditorMemory::resizeLines()
 {
-    int newLinesNum = currentLinesNum * 2;
+    unsigned int newLinesNum = currentLinesNum * 2;
     char** newMemory = (char**)realloc(textMemory, newLinesNum * sizeof(char*));
     if (!newMemory)
     {
@@ -60,7 +82,7 @@ int EditorMemory::resizeLines()
         return 1;
     }
 
-    for (int i = currentLinesNum; i < newLinesNum; i++)
+    for (unsigned int i = currentLinesNum; i < newLinesNum; i++)
     {
         newMemory[i] = (char*)malloc(currentLengthNum * sizeof(char));
         if (!newMemory[i]) {
@@ -79,8 +101,8 @@ int EditorMemory::resizeLines()
 
 int EditorMemory::resizeLength()
 {
-    int newLengthNum = currentLengthNum * 2;
-    for (int i = 0; i < currentLinesNum; i++)
+    unsigned int newLengthNum = currentLengthNum * 2;
+    for (unsigned int i = 0; i < currentLinesNum; i++)
     {
         char* newLine = (char*)calloc(newLengthNum, sizeof(char));
 
@@ -102,7 +124,7 @@ int EditorMemory::resizeLength()
 
 void EditorMemory::print()
 {
-	for (int i = 0; i <= currentLine; i++)
+	for (unsigned int i = 0; i <= currentLine; i++)
 	{
 		printf("%d: %s\n", i, textMemory[i]);
 	}
@@ -114,7 +136,7 @@ void EditorMemory::find(char* text)
     bool found;
 
     found = false;
-    for (int i = 0; i <= currentLine; i++)
+    for (unsigned int i = 0; i <= currentLine; i++)
     {
         char* result = strstr(textMemory[i], text);
 
@@ -132,4 +154,27 @@ void EditorMemory::find(char* text)
     {
         printf(">No occurrence found\n");
     }
+}
+
+void EditorMemory::saveCommand(RevertableCommand* command) 
+{
+    RevertableCommand** newCommandsMemory = new RevertableCommand * [commandsMemorySize];
+
+    for (unsigned int i = 0; i < commandsMemorySize - 1; i++)
+        newCommandsMemory[i] = commandsMemory[i + 1];
+
+    newCommandsMemory[commandsMemorySize - 1] = command;
+
+    free(commandsMemory);
+    commandsMemory = newCommandsMemory;
+}
+
+void EditorMemory::createClipboard(unsigned int size) 
+{
+    if (clipboard) 
+    {
+        delete clipboard;
+    }
+
+    clipboard = new char[size];
 }

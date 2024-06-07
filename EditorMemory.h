@@ -5,26 +5,30 @@
 
 #include "RevertableCommand.h"
 
-class EditorMemory
+class EditorMemory : public Memory
 {
 public:
-    EditorMemory(int lines, int length);
+    EditorMemory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize);
     ~EditorMemory();
 
     int initializeMemory();
+    int initializeCommandsMemory();
     void freeMemory();
     int resizeLines();
     int resizeLength();
     void saveCommand(RevertableCommand* command);
     void print();
     void find(char* text);
+    void createClipboard(unsigned int size);
 
     unsigned int currentLine; 
     unsigned int currentLinesNum;
     unsigned int currentLengthNum;
+    unsigned int commandsMemorySize;
 
     char** textMemory;
     char* clipboard;
     RevertableCommand** commandsMemory;
+    
 };
 

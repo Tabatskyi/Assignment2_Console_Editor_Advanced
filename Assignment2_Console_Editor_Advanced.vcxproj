@@ -149,6 +149,7 @@
     <ClInclude Include="EditorMemory.h" />
     <ClInclude Include="Insert.h" />
     <ClInclude Include="LoadFromFile.h" />
+    <ClInclude Include="Memory.h" />
     <ClInclude Include="NewLine.h" />
     <ClInclude Include="Paste.h" />
     <ClInclude Include="Replace.h" />

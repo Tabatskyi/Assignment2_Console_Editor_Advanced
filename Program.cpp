@@ -26,7 +26,8 @@
 int main()
 {
     char command;
-    EditorMemory memory(128, 256);
+    EditorMemory memory(128, 256, 3);
+    unsigned int undoStep = 0;
 
     do
     {
@@ -114,15 +115,19 @@ int main()
 
             Delete deleteCommand(line, index, symbolsCount);
 			deleteCommand.Do(&memory);
-            //memory.saveCommand(&deleteCommand);
+            memory.saveCommand(&deleteCommand);
         }
         else if (command == 'u')
         {
-            //undo
+            unsigned int size = memory.commandsMemorySize;
+            memory.commandsMemory[size - undoStep]->Undo(&memory);
+            undoStep++;
         }
         else if (command == 'z')
         {
-            //redo
+            undoStep--;
+            unsigned int size = memory.commandsMemorySize;
+            memory.commandsMemory[size - undoStep]->Do(&memory);
         }
         else if (command == 'x')
         {
