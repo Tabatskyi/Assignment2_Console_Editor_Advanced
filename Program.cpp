@@ -73,8 +73,7 @@ int main()
         else if (command == 'i')
         {
             char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
-            unsigned int line;
-            unsigned int index;
+            unsigned int line, index;
 
             printf(">Choose line and index: ");
             (void)scanf("%u %u", &line, &index);
@@ -101,21 +100,21 @@ int main()
         }
         else if (command == 'd')
         {
-            unsigned int line;
-            unsigned int index;
-            unsigned int symbolsCount;
+            unsigned int line, index, symbolsCount;
 
-            printf(">Choose line and index: ");
+            printf(">Choose line, index and symbols count: ");
             (void)scanf("%u %u %u", &line, &index, &symbolsCount);
 
             if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
-			{
-				printf("Error: Index out of range");
-			}
-
-            Delete deleteCommand(line, index, symbolsCount);
-			deleteCommand.Do(&memory);
-            memory.saveCommand(&deleteCommand);
+            {
+                printf("Error: Index out of range");
+            }
+            else
+            {
+                Delete* deleteCommand = new Delete(line, index, symbolsCount);
+                deleteCommand->Do(&memory);
+                memory.saveCommand(deleteCommand);
+            }
         }
         else if (command == 'u')
         {

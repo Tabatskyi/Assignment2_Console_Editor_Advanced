@@ -14,27 +14,23 @@ Delete::Delete(unsigned int line, unsigned int index, unsigned int symbolsCount)
 	deletedText = new char[count];
 }
 
-void Delete::Do(EditorMemory* memory)
+Delete::~Delete() 
 {
-    int currentLengthNum = memory->currentLengthNum;
-    int currentLinesNum = memory->currentLinesNum;
+    delete[] deletedText;
+}
 
-    char* firstPart = new char[currentLengthNum];
-    char* secondPart = new char[currentLengthNum];
+void Delete::Do(EditorMemory* memory) 
+{
+    char* lineText = memory->textMemory[line];
+    unsigned int lineLength = strlen(lineText);
 
-    strncpy(firstPart, memory->textMemory[line], index);
-    firstPart[index] = '\0';
+    if (index + count > lineLength) 
+        count = lineLength - index; 
 
-    strncpy(deletedText, memory->textMemory[line] + index, count);
-    deletedText[count] = '\0';
+    strncpy(deletedText, lineText + index, count);
+    deletedText[count] = '\0';  
 
-    strncpy(secondPart, memory->textMemory[line] + index + count, currentLengthNum - index - count);
-    secondPart[currentLengthNum - index - count] = '\0';
-
-    strcpy(memory->textMemory[line], strcat(firstPart, secondPart));
-
-    delete[] firstPart;
-    delete[] secondPart;
+    memmove(lineText + index, lineText + index + count, lineLength - index - count + 1); 
 }
 
 void Delete::Undo(EditorMemory* memory)

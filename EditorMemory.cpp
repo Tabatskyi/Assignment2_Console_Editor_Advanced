@@ -155,9 +155,8 @@ void EditorMemory::saveCommand(RevertableCommand* command)
 {
     delete[] commandsMemory[0];
 
-    for (unsigned int i = 1; i < commandsMemorySize; i++) {
+    for (unsigned int i = 1; i < commandsMemorySize; i++) 
         commandsMemory[i - 1] = commandsMemory[i];
-    }
 
     commandsMemory[commandsMemorySize - 1] = command;
 }
