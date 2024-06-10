@@ -17,6 +17,7 @@ public:
     void print();
     void find(char* text);
     void createClipboard(unsigned int size);
+    void deleteClipboard();
 
     unsigned int currentLine, currentLinesNum, currentLengthNum, commandsMemorySize, undoStep;
 

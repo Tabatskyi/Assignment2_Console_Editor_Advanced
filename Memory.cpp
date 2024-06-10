@@ -193,3 +193,8 @@ void Memory::createClipboard(unsigned int size)
 
     clipboard = new char[size];
 }
+
+void Memory::deleteClipboard() 
+{
+	delete[] clipboard;
+}

@@ -72,6 +72,7 @@ int main()
             if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
             {
                 printf("Error: Index out of range");
+                continue;
             }
 
             printf(">Enter text to insert: ");
@@ -99,6 +100,7 @@ int main()
             if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
             {
                 printf("Error: Index out of range");
+                continue;
             }
             else
             {
@@ -136,7 +138,20 @@ int main()
         }
         else if (command == 'c')
         {
-            //copy
+            unsigned int line, index, symbolsCount;
+
+            printf(">Choose line, index and symbols count: ");
+            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+
+            if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+
+            Copy* copy = new Copy(line, index, symbolsCount);
+            copy->Do(&memory);
+            memory.saveCommand(copy);
         }
         else if (command == 'v')
         {

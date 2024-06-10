@@ -31,7 +31,6 @@ void Delete::Do(Memory* memory)
 
 void Delete::Undo(Memory* memory)
 {
-    printf("Undo delete\n");
     Insert insert(line, index, deletedText);
     insert.Do(memory);
 }

@@ -8,10 +8,9 @@ public:
 
 	void Do(Memory* memory);
 	void Undo(Memory* memory);
-private:
-	unsigned int line;
-	unsigned int index;
-	unsigned int count;
+
 	char* deletedText;
+private:
+	unsigned int line, index, count;
 };
 
