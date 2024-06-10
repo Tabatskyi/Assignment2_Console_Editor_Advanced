@@ -2,7 +2,7 @@
 
 Memory::Memory(unsigned int lines, unsigned int length, unsigned int commandsMemorySize)
 {
-    undoStep = 1;
+    undoStep = 0;
     currentLine = 0;
     currentLinesNum = lines;
     currentLengthNum = length;
@@ -162,31 +162,30 @@ void Memory::printCommands()
 
 void Memory::saveCommand(RevertableCommand* command)
 {
-    std::cout << "Saving command: " << command << std::endl;
-    if (undoStep > 1) 
-	{
-		for (unsigned int i = commandsMemorySize - 1; i >= undoStep; i--) 
-		{
-			commandsMemory[i] = commandsMemory[i - 1];
-		}
-        undoStep = 1;
-	}
-    
-    else 
+    if (undoStep > 0)
     {
-        delete[] commandsMemory[0];
-
-        for (unsigned int i = 1; i < commandsMemorySize; i++)
+        for (int i = commandsMemorySize - undoStep; i >= 0; i--)
         {
-            commandsMemory[i - 1] = commandsMemory[i];
+            commandsMemory[i + undoStep] = commandsMemory[i];
         }
+        for (int i = 0; i < undoStep; i++)
+		{
+			commandsMemory[i] = nullptr;
+		}
     }
-    
+    undoStep = 0;
 
+    delete[] commandsMemory[0];
+
+    for (unsigned int i = 1; i < commandsMemorySize; i++)
+    {
+        commandsMemory[i - 1] = commandsMemory[i];
+
+    }
     commandsMemory[commandsMemorySize - 1] = command;
-    printCommands();
-    
 }
+
+
 void Memory::createClipboard(unsigned int size) 
 {
     if (clipboard) 

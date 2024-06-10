@@ -110,18 +110,17 @@ int main()
         else if (command == 'u')
         {
             unsigned int size = memory.commandsMemorySize;
+            memory.undoStep++;
 
-            if (memory.undoStep >= size)
+            if (memory.undoStep >= size or memory.commandsMemory[size - memory.undoStep] == nullptr)
             {
 				printf(">No more commands to undo\n");
 				continue;
 			}
             memory.commandsMemory[size - memory.undoStep]->Undo(&memory);
-            memory.undoStep++;
         }
         else if (command == 'z')
         {
-            memory.undoStep--;
             unsigned int size = memory.commandsMemorySize;
             if (memory.undoStep == 0)
 			{
@@ -129,6 +128,7 @@ int main()
 				continue;
 			}
             memory.commandsMemory[size - memory.undoStep]->Do(&memory);
+            memory.undoStep--;
         }
         else if (command == 'x')
         {
@@ -164,7 +164,7 @@ int main()
 
     } while (command != 'q');
 
-    memory.freeMemory();
+    delete &memory;
 
     return 0;
 }
