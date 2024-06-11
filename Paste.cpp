@@ -24,6 +24,7 @@ void Paste::Do(Memory* memory)
 
 void Paste::Undo(Memory* memory)
 {
-	Delete deleteCommand(line, index, strlen(text));
-	deleteCommand.Do(memory);
+	Delete* deleteCommand = new Delete(line, index, strlen(text));
+	deleteCommand->Do(memory);
+    delete deleteCommand;
 }

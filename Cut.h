@@ -3,7 +3,7 @@
 class Cut : public RevertableCommand
 {
 public:
-	Cut();
+	Cut(unsigned int line, unsigned int index, unsigned int count);
 	~Cut();
 
 	void Do(Memory* memory);

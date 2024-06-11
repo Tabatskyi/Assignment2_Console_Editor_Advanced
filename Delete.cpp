@@ -31,6 +31,7 @@ void Delete::Do(Memory* memory)
 
 void Delete::Undo(Memory* memory)
 {
-    Insert insert(line, index, deletedText);
-    insert.Do(memory);
+    Insert* insert = new Insert(line, index, deletedText);
+    insert->Do(memory);
+    delete insert;
 }

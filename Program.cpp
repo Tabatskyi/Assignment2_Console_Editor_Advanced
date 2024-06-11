@@ -134,7 +134,20 @@ int main()
         }
         else if (command == 'x')
         {
-            //cut
+            unsigned int line, index, symbolsCount;
+
+            printf(">Choose line, index and symbols count: ");
+            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+
+            if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+            
+            Cut* cut = new Cut(line, index, symbolsCount);
+            cut->Do(&memory);
+            memory.saveCommand(cut);
         }
         else if (command == 'c')
         {
@@ -172,7 +185,24 @@ int main()
         }
 		else if (command == 'r')
 		{
-            //replace
+            char* inputBuffer = (char*)malloc(memory.currentLengthNum * sizeof(char));
+            unsigned int line, index;
+
+            printf(">Choose line and index: ");
+            (void)scanf("%u %u", &line, &index);
+
+            if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+
+            printf(">Enter text to insert: ");
+            (void)scanf(" %[^\n]", inputBuffer);
+
+            Replace* replace = new Replace(line, index, inputBuffer);
+            replace->Do(&memory);
+            memory.saveCommand(replace);
 		}
         else if (command == 'e')
         {

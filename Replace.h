@@ -3,7 +3,7 @@
 class Replace : public RevertableCommand
 {
 public:
-	Replace();
+	Replace(unsigned int line, unsigned int index, char* textToInsert);
 	~Replace();
 
 	void Do(Memory* memory);
@@ -11,5 +11,6 @@ public:
 private:
 	unsigned int line, index, count;
 	char* replacedText;
+	char* textToInsert;
 };
 
