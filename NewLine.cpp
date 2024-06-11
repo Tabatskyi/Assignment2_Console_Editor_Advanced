@@ -5,9 +5,7 @@ NewLine::NewLine(unsigned int currentLine)
     line = currentLine + 1;
 }
 
-NewLine::~NewLine()
-{
-}
+NewLine::~NewLine() = default;
 
 void NewLine::Do(Memory* memory)
 {

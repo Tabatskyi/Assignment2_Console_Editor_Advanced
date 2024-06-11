@@ -21,53 +21,58 @@ void Memory::freeMemory()
 {
     for (unsigned int i = 0; i < currentLinesNum; i++)
     {
-        free(textMemory[i]);
+        delete textMemory[i];
     }
-    free(textMemory);
+    delete textMemory;
     delete commandsMemory;
 }
 
+
 int Memory::initializeMemory()
 {
-    textMemory = (char**)malloc(currentLinesNum * sizeof(char*));
+    textMemory = new char* [currentLengthNum];
+
     if (!textMemory)
     {
         perror(">Memory allocation failed.\n");
         return 1;
     }
-    for (unsigned int i = 0; i < currentLinesNum; i++)
+
+    for (unsigned int i = 0; i < currentLengthNum; i++)
     {
-        textMemory[i] = (char*)malloc(currentLengthNum * sizeof(char));
-        if (!textMemory[i])
-        {
-            perror(">Memory allocation failed.\n");
-            freeMemory();
-            return 1;
-        }
+        textMemory[i] = new char[currentLengthNum];
         textMemory[i][0] = '\0';
     }
+
+    return 0;
 }
+
 
 int Memory::initializeCommandsMemory()
 {
-    commandsMemory = new RevertableCommand * [commandsMemorySize];
+    commandsMemory = new RevertableCommand* [commandsMemorySize];
+
     if (!commandsMemory)
     {
         perror(">Memory allocation failed.\n");
         return 1;
     }
+
     for (unsigned int i = 0; i < commandsMemorySize; i++)
     {
         commandsMemory[i] = nullptr;
     }
+
     return 0; 
 }
 
 
-int Memory::resizeLines()
+int Memory::resizeLines() 
 {
     unsigned int newLinesNum = currentLinesNum * 2;
-    char** newMemory = (char**)realloc(textMemory, newLinesNum * sizeof(char*));
+    char** newMemory = new char*[newLinesNum];
+    memcpy(newMemory, textMemory, newLinesNum * sizeof(char*));
+
     if (!newMemory)
     {
         perror("Memory reallocation failed");
@@ -76,8 +81,9 @@ int Memory::resizeLines()
 
     for (unsigned int i = currentLinesNum; i < newLinesNum; i++)
     {
-        newMemory[i] = (char*)malloc(currentLengthNum * sizeof(char));
-        if (!newMemory[i]) {
+        newMemory[i] = new char[currentLengthNum];
+        if (!newMemory[i]) 
+        {
             perror("Memory allocation failed for new lines");
             return 1;
         }
@@ -86,17 +92,16 @@ int Memory::resizeLines()
 
     currentLinesNum = newLinesNum;
     textMemory = newMemory;
-    printf("Line capacity expanded to %d\n", currentLinesNum);
     return 0;
 }
 
 
-int Memory::resizeLength()
+int Memory::resizeLength() 
 {
     unsigned int newLengthNum = currentLengthNum * 2;
     for (unsigned int i = 0; i < currentLinesNum; i++)
     {
-        char* newLine = (char*)calloc(newLengthNum, sizeof(char));
+        char* newLine = new char[newLengthNum];
 
         strcpy(newLine, textMemory[i]);
         if (!newLine)
@@ -104,13 +109,12 @@ int Memory::resizeLength()
             perror("Memory reallocation failed for line resizing");
             return 1;
         }
-        textMemory[i] = (char*)calloc(newLengthNum, sizeof(char));
+        textMemory[i] = new char[newLengthNum];
         strcpy(textMemory[i], newLine);
-        free(newLine);
+        delete[] newLine;
     }
 
     currentLengthNum = newLengthNum;
-    printf("Line length resized to %d\n", currentLengthNum);
     return 0;
 }
 
