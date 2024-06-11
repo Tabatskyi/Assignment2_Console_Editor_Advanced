@@ -25,6 +25,7 @@ void Memory::freeMemory()
     }
     delete textMemory;
     delete commandsMemory;
+    delete clipboard;
 }
 
 
@@ -192,13 +193,5 @@ void Memory::saveCommand(RevertableCommand* command)
 
 void Memory::createClipboard(unsigned int size) 
 {
-    if (clipboard) 
-        delete[] clipboard;
-
     clipboard = new char[size];
-}
-
-void Memory::deleteClipboard() 
-{
-	delete[] clipboard;
 }
