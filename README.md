@@ -35,13 +35,16 @@ Save file to the 'sherlock.txt' using the 's' command. File saved.
 
 Program features dynamic clipboard. So we can copy, cut and paste text.
 Use copy with command 'c'. And paste text to another place with 'v'
+
 <img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/cdd8efb7-3af3-4b06-ad26-54110e7278e7">
-Output
+
+Output                                                                                        
 <img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/80b6a6f8-4415-4ece-9c55-58aca885eef6">
 
-Repeat for cut command using 'x'.
+Repeat for cut command using 'x'.                                        
 <img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/8bdbd862-d617-41bf-bcbf-b97ecffe325c">
-Output
+
+Output                                                  
 <img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/7d77b4e7-ab86-4ace-a553-e5adc1ceea7c">
 
 Also program features undo and redo commands
