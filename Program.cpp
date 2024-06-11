@@ -1,282 +1,224 @@
-#define _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_DEPRECATE  
-#define _CRT_NONSTDC_NO_DEPRECATE
-
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-
-int currentLinesNum;
-int currentLenghNum;
-
-char** memory;
-int currentLine;
-
-void freeMemory()
-{
-    for (int i = 0; i < currentLinesNum; i++)
-    {
-        free(memory[i]);
-    }
-    free(memory);
-}
-
-
-int initializeMemory()
-{
-    currentLine = 0;
-    currentLinesNum = 128;
-    currentLenghNum = 256;
-
-    memory = (char**)malloc(currentLinesNum * sizeof(char*));
-    if (!memory)
-    {
-        perror(">Memory allocation failed.\n");
-        return 1;
-    }
-    for (int i = 0; i < currentLinesNum; i++)
-    {
-        memory[i] = (char*)malloc(currentLenghNum * sizeof(char));
-        if (!memory[i])
-        {
-            perror(">Memory allocation failed.\n");
-            freeMemory();
-            return 1;
-        }
-        memory[i][0] = 0;
-    }
-
-}
-
-
-int resizeLines()
-{
-    int newLinesNum = currentLinesNum * 2;
-    char** newMemory = (char**)realloc(memory, newLinesNum * sizeof(char*));
-    if (!newMemory)
-    {
-        perror("Memory reallocation failed");
-        return 1;
-    }
-
-    for (int i = currentLinesNum; i < newLinesNum; i++)
-    {
-        newMemory[i] = (char*)malloc(currentLenghNum * sizeof(char));
-        if (!newMemory[i]) {
-            perror("Memory allocation failed for new lines");
-            return 1;
-        }
-        newMemory[i][0] = '\0';
-    }
-
-    currentLinesNum = newLinesNum;
-    memory = newMemory;
-    printf("Line capacity expanded to %d\n", currentLinesNum);
-    return 0;
-}
-
-
-int resizeLength()
-{
-    int newLengthNum = currentLenghNum * 2;
-    for (int i = 0; i < currentLinesNum; i++)
-    {
-        char* newLine = (char*)malloc(newLengthNum * sizeof(char));
-        strcpy(newLine, memory[i]);
-        if (!newLine)
-        {
-            perror("Memory reallocation failed for line resizing");
-            return 1;
-        }
-        memory[i] = (char*)malloc(newLengthNum * sizeof(char));
-        strcpy(memory[i], newLine);
-        free(newLine);
-    }
-
-    currentLenghNum = newLengthNum;
-    printf("Line length resized to %d\n", currentLenghNum);
-    return 0;
-}
+#include "Memory.h"
+#include "Append.h"
+#include "NewLine.h"
+#include "SaveToFile.h"
+#include "LoadFromFile.h"
+#include "Insert.h"
+#include "Delete.h"
+#include "Copy.h"
+#include "Cut.h"
+#include "Paste.h"
+#include "Replace.h"
 
 
 int main()
 {
-    if (initializeMemory() == 1)
-        return 1;
-
     char command;
-    char* inputBuffer = (char*)malloc(currentLenghNum * sizeof(char));
-    FILE* file;
-    char filename[100] = "myfile.txt";
+    Memory* memory = new Memory(128, 256, 3);
 
     do
     {
         printf(">");
         (void)scanf(" %c", &command);
 
-        switch (command)
+        if (command == 'a')
         {
-        case 'a':
+            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
             printf(">Enter text to append: ");
             (void)scanf(" %[^\n]s", inputBuffer);
-
-            if (strlen(memory[currentLine]) + strlen(inputBuffer) < currentLenghNum)
-            {
-                strcat(memory[currentLine], inputBuffer);
-            }
-            else
-            {
-                resizeLength();
-                strcat(memory[currentLine], inputBuffer);
-            }
-            break;
-
-        case 'n':
+            Append* append = new Append(memory->currentLine, inputBuffer);
+            append->Do(memory);
+            memory->saveCommand(append);
+        }
+        else if (command == 'n')
+        {
             printf(">New line started\n");
-            if (currentLine < currentLinesNum - 1)
-            {
-                currentLine++;
-            }
-            else
-            {
-                resizeLines();
-                currentLine++;
-            }
-            break;
-
-        case 's':
+            NewLine* newLine = new NewLine(memory->currentLine);
+            newLine->Do(memory);
+            memory->saveCommand(newLine);
+        }
+        else if (command == 's')
+        {
+            char filename[100];
             printf(">Enter filename for saving: ");
             (void)scanf(" %s", filename);
-
-            file = fopen(filename, "w");
-            if (file != NULL)
-            {
-                for (int i = 0; i <= currentLine; i++)
-                {
-                    fprintf(file, "%s\n", memory[i]);
-                }
-                fclose(file);
-                printf(">Save successful\n");
-            }
-            else
-            {
-                printf(">Error opening file\n");
-            }
-            break;
-
-        case 'l':
+            SaveToFile* saveToFile = new SaveToFile(filename);
+            saveToFile->Do(memory);
+        }
+        else if (command == 'l')
+        {
+            char filename[100];
             printf(">Enter filename for loading: ");
             (void)scanf(" %s", filename);
-
-            file = fopen(filename, "r");
-            if (file != NULL)
-            {
-                currentLine = 0;
-                while (fgets(inputBuffer, currentLenghNum, file) != NULL)
-                {
-                    if (currentLine++ >= currentLinesNum)
-                    {
-                        resizeLines();
-                    }
-                    inputBuffer[strlen(inputBuffer) - 1] = 0;
-                    strcpy(memory[currentLine - 1], inputBuffer);
-                }
-                fclose(file);
-                currentLine--;
-                printf(">Load successful\n");
-            }
-            else
-            {
-                perror(">Error opening file\n");
-            }
-            break;
-
-        case 'p':
-            for (int i = 0; i <= currentLine; i++)
-            {
-                printf("%d: %s\n", i, memory[i]);
-            }
-            break;
-
-        case 'i':
-            char* firstPart;
-            char* secondPart;
-            unsigned int line;
-            unsigned int index;
+            LoadFromFile* loadFromFile = new LoadFromFile(filename);
+            loadFromFile->Do(memory);
+        }
+        else if (command == 'p')
+        {
+            memory->print();
+        }
+        else if (command == 'i')
+        {
+            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            unsigned int line, index;
 
             printf(">Choose line and index: ");
             (void)scanf("%u %u", &line, &index);
 
-            if (line >= currentLinesNum || index >= currentLenghNum)
+            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
             {
                 printf("Error: Index out of range");
+                continue;
             }
 
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
-            firstPart = (char*)malloc(currentLenghNum * sizeof(char));
-            secondPart = (char*)malloc(currentLenghNum * sizeof(char));
-
-            strcpy(firstPart, memory[line] + index);
-            firstPart[index] = 0;
-
-            strcpy(secondPart, memory[line] + index);
-
-            if (strlen(firstPart) + strlen(inputBuffer) + strlen(secondPart) >= currentLenghNum)
-                resizeLength();
-
-            strcpy(memory[line], strcat(strcat(firstPart, inputBuffer), secondPart));
-
-            free(firstPart);
-            free(secondPart);
-            break;
-
-        case 'f':
-            unsigned int position;
-            bool found;
-
+            Insert* insert = new Insert(line, index, inputBuffer);
+            insert->Do(memory);
+            memory->saveCommand(insert);
+        }
+        else if (command == 'f')
+        {
+            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
             printf(">Enter text to search: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
-            found = false;
-            for (int i = 0; i <= currentLine; i++)
-            {
-                char* result = strstr(memory[i], inputBuffer);
-
-                position = result - memory[i];
-                while (result != NULL)
-                {
-                    position = result - memory[i];
-                    printf(">Found occurrence at %u %u\n", i, position);
-                    found = true;
-
-                    result = strstr(result + strlen(inputBuffer), inputBuffer);
-                }
-            }
-            if (!found)
-            {
-                printf(">No occurrence found\n");
-            }
-            break;
-
-        case 'c':
-            freeMemory();
-            printf(">Memory cleaned\n");
-            initializeMemory();
-            break;
-
-        case 'q':
-            printf(">Goodbye!\n");
-            break;
-
-        default:
-            printf(">unknown function\n");
-            break;
+            memory->find(inputBuffer);
         }
+        else if (command == 'd')
+        {
+            unsigned int line, index, symbolsCount;
+
+            printf(">Choose line, index and symbols count: ");
+            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+
+            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+            else
+            {
+                Delete* deleteCommand = new Delete(line, index, symbolsCount);
+                deleteCommand->Do(memory);
+                memory->saveCommand(deleteCommand);
+            }
+        }
+        else if (command == 'u')
+        {
+            unsigned int size = memory->commandsMemorySize;
+            memory->undoStep++;
+
+            if (memory->undoStep >= size or memory->commandsMemory[size - memory->undoStep] == nullptr)
+            {
+				printf(">No more commands to undo\n");
+				continue;
+			}
+            memory->commandsMemory[size - memory->undoStep]->Undo(memory);
+        }
+        else if (command == 'z')
+        {
+            unsigned int size = memory->commandsMemorySize;
+            if (memory->undoStep == 0)
+			{
+				printf(">No more commands to redo\n");
+				continue;
+			}
+            memory->commandsMemory[size - memory->undoStep]->Do(memory);
+            memory->undoStep--;
+        }
+        else if (command == 'x')
+        {
+            unsigned int line, index, symbolsCount;
+
+            printf(">Choose line, index and symbols count: ");
+            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+
+            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+            
+            Cut* cut = new Cut(line, index, symbolsCount);
+            cut->Do(memory);
+            memory->saveCommand(cut);
+        }
+        else if (command == 'c')
+        {
+            unsigned int line, index, symbolsCount;
+
+            printf(">Choose line, index and symbols count: ");
+            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+
+            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+
+            Copy* copy = new Copy(line, index, symbolsCount);
+            copy->Do(memory);
+            memory->saveCommand(copy);
+        }
+        else if (command == 'v')
+        {
+            unsigned int line, index;
+
+            printf(">Choose line and index: ");
+            (void)scanf("%u %u", &line, &index);
+
+            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+
+            Paste* paste = new Paste(line, index);
+            paste->Do(memory);
+            memory->saveCommand(paste);
+        }
+		else if (command == 'r')
+		{
+            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            unsigned int line, index;
+
+            printf(">Choose line and index: ");
+            (void)scanf("%u %u", &line, &index);
+
+            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+
+            printf(">Enter text to insert: ");
+            (void)scanf(" %[^\n]", inputBuffer);
+
+            Replace* replace = new Replace(line, index, inputBuffer);
+            replace->Do(memory);
+            memory->saveCommand(replace);
+		}
+        else if (command == 'e')
+        {
+            memory->freeMemory();
+            memory->currentLine = 0;
+
+            printf(">Memory erased\n");
+            
+            memory->initializeMemory();
+        }
+        else if (command == 'q')
+        {
+            printf(">Goodbye!\n");
+        }
+        else 
+            printf(">unknown command\n");
+
     } while (command != 'q');
 
-    freeMemory();
+    delete memory;
 
     return 0;
 }
