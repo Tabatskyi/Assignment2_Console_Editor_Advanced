@@ -10,6 +10,7 @@ public:
 	void Undo(Memory* memory);
 private:
 	unsigned int line, index; 
+	char* firstPart, * secondPart;
 	char* text;
 };
 

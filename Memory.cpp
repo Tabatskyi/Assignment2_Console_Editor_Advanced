@@ -24,7 +24,7 @@ void Memory::freeMemory()
         free(textMemory[i]);
     }
     free(textMemory);
-    free(commandsMemory);
+    delete commandsMemory;
 }
 
 int Memory::initializeMemory()

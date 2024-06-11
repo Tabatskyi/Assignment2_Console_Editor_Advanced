@@ -14,6 +14,8 @@ Insert::Insert(int line, int column, const char* input)
 Insert::~Insert()
 {
     delete[] text;
+    delete[] firstPart;
+    delete[] secondPart;
 }
 
 void Insert::Do(Memory* memory)
@@ -21,21 +23,21 @@ void Insert::Do(Memory* memory)
     int currentLengthNum = memory->currentLengthNum;
     int currentLinesNum = memory->currentLinesNum;
 
-    char* firstPart = new char[currentLengthNum];
-    char* secondPart = new char[currentLengthNum];
+    firstPart = new char[currentLengthNum];
+    secondPart = new char[currentLengthNum];
 
     strcpy(firstPart, memory->textMemory[line]);
     firstPart[index] = '\0';
 
     strcpy(secondPart, memory->textMemory[line] + index);
 
-    while (strlen(firstPart) + strlen(text) + strlen(secondPart) >= currentLengthNum)
+    while (strlen(firstPart) + strlen(text) + strlen(secondPart) >= currentLengthNum) 
+    {
         memory->resizeLength();
+        currentLengthNum = memory->currentLengthNum;
+    }
 
     strcpy(memory->textMemory[line], strcat(strcat(firstPart, text), secondPart));
-
-    delete[] firstPart;
-    delete[] secondPart;
 }
 
 void Insert::Undo(Memory* memory)
