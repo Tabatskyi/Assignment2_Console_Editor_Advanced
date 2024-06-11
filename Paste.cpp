@@ -18,6 +18,10 @@ void Paste::Do(Memory* memory)
 {
     text = new char[strlen(memory->clipboard) + 1];
     strcpy(text, memory->clipboard);
+
+    if (index >= strlen(memory->textMemory[line]))
+        index = strlen(memory->textMemory[line]);
+
 	Insert* insert = new Insert(line, index, text);
     insert->Do(memory);
 }
