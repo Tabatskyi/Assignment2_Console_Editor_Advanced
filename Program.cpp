@@ -155,7 +155,20 @@ int main()
         }
         else if (command == 'v')
         {
-            //paste
+            unsigned int line, index;
+
+            printf(">Choose line and index: ");
+            (void)scanf("%u %u", &line, &index);
+
+            if (line >= memory.currentLinesNum || index >= memory.currentLengthNum)
+            {
+                printf("Error: Index out of range");
+                continue;
+            }
+
+            Paste* paste = new Paste(line, index);
+            paste->Do(&memory);
+            memory.saveCommand(paste);
         }
 		else if (command == 'r')
 		{

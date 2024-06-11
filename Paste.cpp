@@ -19,6 +19,7 @@ void Paste::Do(Memory* memory)
     text = new char[strlen(memory->clipboard) + 1];
     strcpy(text, memory->clipboard);
 	Insert* insert = new Insert(line, index, text);
+    insert->Do(memory);
 }
 
 void Paste::Undo(Memory* memory)
