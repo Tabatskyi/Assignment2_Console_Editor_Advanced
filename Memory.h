@@ -1,5 +1,6 @@
 #pragma once
 #include "RevertableCommand.h"
+#include "Coursor.h"
 
 class Memory
 {
@@ -24,4 +25,5 @@ public:
     char** textMemory;
     char* clipboard;
     RevertableCommand** commandsMemory;
+    Coursor coursor;
 };

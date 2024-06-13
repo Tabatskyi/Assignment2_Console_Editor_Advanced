@@ -31,5 +31,4 @@ void Cut::Undo(Memory* memory)
 {
 	Insert* insert = new Insert(line, index, cuttedText);
 	insert->Do(memory);
-	delete insert;
 }

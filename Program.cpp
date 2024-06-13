@@ -9,6 +9,18 @@
 #include "Cut.h"
 #include "Paste.h"
 #include "Replace.h"
+#include "Coursor.h"
+
+
+static bool validatePosition(unsigned int line, unsigned int index, Memory* memory)
+{
+	if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+	{
+		printf("Error: Index out of range");
+		return false;
+	}
+	return true;
+}
 
 
 int main()
@@ -55,21 +67,19 @@ int main()
         }
         else if (command == 'p')
         {
+            unsigned int x, y;
+            memory->coursor.GetPosition(x, y);
+            Insert* showCoursor = new Insert(x, y, "|");
+            showCoursor->Do(memory);
             memory->print();
+            showCoursor->Undo(memory);
         }
         else if (command == 'i')
         {
-            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            char* inputBuffer = new char[memory->currentLengthNum];
             unsigned int line, index;
 
-            printf(">Choose line and index: ");
-            (void)scanf("%u %u", &line, &index);
-
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
-                continue;
-            }
+            memory->coursor.GetPosition(line, index);
 
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
@@ -80,7 +90,7 @@ int main()
         }
         else if (command == 'f')
         {
-            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            char* inputBuffer = new char[memory->currentLengthNum];
             printf(">Enter text to search: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
@@ -90,20 +100,14 @@ int main()
         {
             unsigned int line, index, symbolsCount;
 
-            printf(">Choose line, index and symbols count: ");
-            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+            memory->coursor.GetPosition(line, index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
-                continue;
-            }
-            else
-            {
-                Delete* deleteCommand = new Delete(line, index, symbolsCount);
-                deleteCommand->Do(memory);
-                memory->saveCommand(deleteCommand);
-            }
+            printf(">Choose symbols count to delete: ");
+            (void)scanf("%u", &symbolsCount);
+            
+            Delete* deleteCommand = new Delete(line, index, symbolsCount);
+            deleteCommand->Do(memory);
+            memory->saveCommand(deleteCommand);
         }
         else if (command == 'u')
         {
@@ -132,14 +136,10 @@ int main()
         {
             unsigned int line, index, symbolsCount;
 
-            printf(">Choose line, index and symbols count: ");
-            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+            memory->coursor.GetPosition(line, index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
-                continue;
-            }
+            printf(">Choose symbols count to cut: ");
+            (void)scanf("%u", &symbolsCount);
             
             Cut* cut = new Cut(line, index, symbolsCount);
             cut->Do(memory);
@@ -149,31 +149,19 @@ int main()
         {
             unsigned int line, index, symbolsCount;
 
-            printf(">Choose line, index and symbols count: ");
-            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+            memory->coursor.GetPosition(line, index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
-                continue;
-            }
+            printf(">Choose symbols count to copy: ");
+            (void)scanf("%u", &symbolsCount);
 
             Copy* copy = new Copy(line, index, symbolsCount);
             copy->Do(memory);
-            memory->saveCommand(copy);
         }
         else if (command == 'v')
         {
             unsigned int line, index;
 
-            printf(">Choose line and index: ");
-            (void)scanf("%u %u", &line, &index);
-
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
-                continue;
-            }
+            memory->coursor.GetPosition(line, index);
 
             Paste* paste = new Paste(line, index);
             paste->Do(memory);
@@ -181,19 +169,12 @@ int main()
         }
 		else if (command == 'r')
 		{
-            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            char* inputBuffer = new char[memory->currentLengthNum];
             unsigned int line, index;
 
-            printf(">Choose line and index: ");
-            (void)scanf("%u %u", &line, &index);
+            memory->coursor.GetPosition(line, index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
-                continue;
-            }
-
-            printf(">Enter text to insert: ");
+            printf(">Enter replacement text: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
             Replace* replace = new Replace(line, index, inputBuffer);
@@ -213,6 +194,37 @@ int main()
         {
             printf(">Goodbye!\n");
         }
+        else if (command == 'm')
+        {
+            char direction;
+            printf(">Enter direction (a=left, d=right, w=up, s=down): ");
+            (void)scanf(" %c", &direction);
+
+            unsigned int x, y;
+            memory->coursor.GetPosition(x, y);
+
+            switch (direction)
+            {
+            case 'a': // left
+                if (y > 0) 
+                    memory->coursor.SetPosition(x, y - 1);
+                break;
+            case 'd': // right
+                if (y < memory->currentLengthNum - 1) 
+                    memory->coursor.SetPosition(x, y + 1);
+                break;
+            case 'w': // up
+                if (x > 0) 
+                    memory->coursor.SetPosition(x - 1, y);
+                break;
+            case 's': // down
+                if (x < memory->currentLinesNum - 1) 
+                    memory->coursor.SetPosition(x + 1, y);
+                break;
+            default:
+                printf(">Invalid direction\n");
+            }
+        }
         else 
             printf(">unknown command\n");
 
@@ -221,4 +233,4 @@ int main()
     delete memory;
 
     return 0;
-}
+} 

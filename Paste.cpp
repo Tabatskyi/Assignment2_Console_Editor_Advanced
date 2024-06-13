@@ -24,11 +24,12 @@ void Paste::Do(Memory* memory)
 
 	Insert* insert = new Insert(line, index, text);
     insert->Do(memory);
+    memory->coursor.SetPosition(line, index + strlen(text));
 }
 
 void Paste::Undo(Memory* memory)
 {
 	Delete* deleteCommand = new Delete(line, index, strlen(text));
 	deleteCommand->Do(memory);
-    delete deleteCommand;
+    memory->coursor.SetPosition(line, index);
 }

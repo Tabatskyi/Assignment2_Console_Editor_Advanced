@@ -25,6 +25,7 @@ void Replace::Do(Memory* memory)
 
 	Insert* insert = new Insert(line, index, textToInsert);
 	insert->Do(memory);
+	memory->coursor.SetPosition(line, index + count);
 }
 
 void Replace::Undo(Memory* memory)
@@ -34,4 +35,5 @@ void Replace::Undo(Memory* memory)
 
 	Insert* insert = new Insert(line, index, replacedText);
 	insert->Do(memory);
+	memory->coursor.SetPosition(line, index);
 }

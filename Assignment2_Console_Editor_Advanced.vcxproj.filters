@@ -51,6 +51,9 @@
     <ClCompile Include="Replace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Coursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RevertableCommand.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Coursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

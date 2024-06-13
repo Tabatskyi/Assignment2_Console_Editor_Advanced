@@ -33,5 +33,4 @@ void Delete::Undo(Memory* memory)
 {
     Insert* insert = new Insert(line, index, deletedText);
     insert->Do(memory);
-    delete insert;
 }

@@ -29,8 +29,3 @@ void Copy::Do(Memory* memory)
 
     strcpy(memory->clipboard, copiedText);
 }
-
-void Copy::Undo(Memory* memory)
-{
-    memory->deleteClipboard();
-}
