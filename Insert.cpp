@@ -38,10 +38,13 @@ void Insert::Do(Memory* memory)
     }
 
     strcpy(memory->textMemory[line], strcat(strcat(firstPart, text), secondPart));
+    memory->coursor.SetPosition(line, index + strlen(text));
 }
 
 void Insert::Undo(Memory* memory)
 {
 	Delete* deleteCommand = new Delete(line, index, strlen(text));
 	deleteCommand->Do(memory);
+    memory->coursor.SetPosition(line, index);
+
 }

@@ -41,7 +41,6 @@ int main()
             Append* append = new Append(memory->currentLine, inputBuffer);
             append->Do(memory);
             memory->saveCommand(append);
-            memory->coursor.SetPosition(memory->currentLine, strlen(memory->textMemory[memory->currentLine]));
         }
         else if (command == 'n')
         {
@@ -77,14 +76,10 @@ int main()
         }
         else if (command == 'i')
         {
-            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            char* inputBuffer = new char[memory->currentLengthNum];
             unsigned int line, index;
 
-            printf(">Choose line and index: ");
-            (void)scanf("%u %u", &line, &index);
-
-            if (!validatePosition(line, index, memory))
-                continue;
+            memory->coursor.GetPosition(line, index);
 
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
@@ -95,7 +90,7 @@ int main()
         }
         else if (command == 'f')
         {
-            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            char* inputBuffer = new char[memory->currentLengthNum];
             printf(">Enter text to search: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
@@ -105,11 +100,10 @@ int main()
         {
             unsigned int line, index, symbolsCount;
 
-            printf(">Choose line, index and symbols count: ");
-            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+            memory->coursor.GetPosition(line, index);
 
-            if (!validatePosition(line, index, memory))
-                continue;
+            printf(">Choose symbols count to delete: ");
+            (void)scanf("%u", &symbolsCount);
             
             Delete* deleteCommand = new Delete(line, index, symbolsCount);
             deleteCommand->Do(memory);
@@ -142,11 +136,10 @@ int main()
         {
             unsigned int line, index, symbolsCount;
 
-            printf(">Choose line, index and symbols count: ");
-            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+            memory->coursor.GetPosition(line, index);
 
-            if (!validatePosition(line, index, memory))
-                continue;
+            printf(">Choose symbols count to cut: ");
+            (void)scanf("%u", &symbolsCount);
             
             Cut* cut = new Cut(line, index, symbolsCount);
             cut->Do(memory);
@@ -156,11 +149,10 @@ int main()
         {
             unsigned int line, index, symbolsCount;
 
-            printf(">Choose line, index and symbols count: ");
-            (void)scanf("%u %u %u", &line, &index, &symbolsCount);
+            memory->coursor.GetPosition(line, index);
 
-            if (!validatePosition(line, index, memory))
-                continue;
+            printf(">Choose symbols count to copy: ");
+            (void)scanf("%u", &symbolsCount);
 
             Copy* copy = new Copy(line, index, symbolsCount);
             copy->Do(memory);
@@ -169,11 +161,7 @@ int main()
         {
             unsigned int line, index;
 
-            printf(">Choose line and index: ");
-            (void)scanf("%u %u", &line, &index);
-
-            if (!validatePosition(line, index, memory))
-                continue;
+            memory->coursor.GetPosition(line, index);
 
             Paste* paste = new Paste(line, index);
             paste->Do(memory);
@@ -181,16 +169,12 @@ int main()
         }
 		else if (command == 'r')
 		{
-            char* inputBuffer = (char*)malloc(memory->currentLengthNum * sizeof(char));
+            char* inputBuffer = new char[memory->currentLengthNum];
             unsigned int line, index;
 
-            printf(">Choose line and index: ");
-            (void)scanf("%u %u", &line, &index);
+            memory->coursor.GetPosition(line, index);
 
-            if(!validatePosition(line, index, memory))
-                continue;
-
-            printf(">Enter text to insert: ");
+            printf(">Enter replacement text: ");
             (void)scanf(" %[^\n]", inputBuffer);
 
             Replace* replace = new Replace(line, index, inputBuffer);
@@ -210,7 +194,7 @@ int main()
         {
             printf(">Goodbye!\n");
         }
-        else if (command == 'm') // Assuming 'm' is the command to move the cursor
+        else if (command == 'm')
         {
             char direction;
             printf(">Enter direction (a=left, d=right, w=up, s=down): ");

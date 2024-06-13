@@ -8,7 +8,6 @@ Append::Append(unsigned int currentLine, char* input)
 
 void Append::Do(Memory* memory)
 {
-
     if (strlen(memory->textMemory[line]) + strlen(text) < memory->currentLengthNum)
     {
         strcat(memory->textMemory[line], text);
@@ -18,9 +17,11 @@ void Append::Do(Memory* memory)
         memory->resizeLength();
         strcat(memory->textMemory[line], text);
     }
+    memory->coursor.SetPosition(memory->currentLine, strlen(memory->textMemory[memory->currentLine]));
 }
 
 void Append::Undo(Memory* memory)
 {
 	memory->textMemory[line][strlen(memory->textMemory[line]) - strlen(text)] = '\0';
+    memory->coursor.SetPosition(memory->currentLine, strlen(memory->textMemory[memory->currentLine]));
 }

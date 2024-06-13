@@ -13,10 +13,12 @@ void NewLine::Do(Memory* memory)
         memory->resizeLines();
 
     memory->currentLine = line;
+    memory->coursor.SetPosition(memory->currentLine, 0);
 }
 
 void NewLine::Undo(Memory* memory)
 {
 	memory->currentLine = line - 1;
 	memory->currentLinesNum--;
+    memory->coursor.SetPosition(memory->currentLine, 0);
 }
