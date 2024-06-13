@@ -9,13 +9,13 @@ Coursor::Coursor()
 
 Coursor::~Coursor() = default;
 
-void Coursor::SetPosition(int x, int y)
+void Coursor::SetPosition(unsigned int x, unsigned int y)
 {
 	this->x = x;
 	this->y = y;
 }
 
-void Coursor::GetPosition(int &x, int &y)
+void Coursor::GetPosition(unsigned int &x, unsigned int &y)
 {
 	x = this->x;
 	y = this->y;

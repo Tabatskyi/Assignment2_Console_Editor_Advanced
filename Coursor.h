@@ -4,8 +4,8 @@ class Coursor
 public:
 	Coursor();
 	~Coursor();
-	void SetPosition(int x, int y);
-	void GetPosition(int &x, int &y);
+	void SetPosition(unsigned int x, unsigned int y);
+	void GetPosition(unsigned int &x, unsigned int &y);
 private:
 	int x;
 	int y;

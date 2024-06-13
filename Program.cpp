@@ -41,6 +41,7 @@ int main()
             Append* append = new Append(memory->currentLine, inputBuffer);
             append->Do(memory);
             memory->saveCommand(append);
+            memory->coursor.SetPosition(memory->currentLine, strlen(memory->textMemory[memory->currentLine]));
         }
         else if (command == 'n')
         {
@@ -67,7 +68,12 @@ int main()
         }
         else if (command == 'p')
         {
+            unsigned int x, y;
+            memory->coursor.GetPosition(x, y);
+            Insert* showCoursor = new Insert(x, y, "|");
+            showCoursor->Do(memory);
             memory->print();
+            showCoursor->Undo(memory);
         }
         else if (command == 'i')
         {
@@ -204,6 +210,37 @@ int main()
         {
             printf(">Goodbye!\n");
         }
+        else if (command == 'm') // Assuming 'm' is the command to move the cursor
+        {
+            char direction;
+            printf(">Enter direction (a=left, d=right, w=up, s=down): ");
+            (void)scanf(" %c", &direction);
+
+            unsigned int x, y;
+            memory->coursor.GetPosition(x, y);
+
+            switch (direction)
+            {
+            case 'a': // left
+                if (y > 0) 
+                    memory->coursor.SetPosition(x, y - 1);
+                break;
+            case 'd': // right
+                if (y < memory->currentLengthNum - 1) 
+                    memory->coursor.SetPosition(x, y + 1);
+                break;
+            case 'w': // up
+                if (x > 0) 
+                    memory->coursor.SetPosition(x - 1, y);
+                break;
+            case 's': // down
+                if (x < memory->currentLinesNum - 1) 
+                    memory->coursor.SetPosition(x + 1, y);
+                break;
+            default:
+                printf(">Invalid direction\n");
+            }
+        }
         else 
             printf(">unknown command\n");
 
@@ -212,4 +249,4 @@ int main()
     delete memory;
 
     return 0;
-}
+} 
