@@ -1,24 +1,25 @@
 # Assignment 2 Console Editor Advanced Test Plan
 
 Start the program, append random text using command 'a'.
-<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment1-Console-Editor/assets/115981919/f2242edb-d49f-4d4d-972d-71d784eba3fd">
+<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/811c7680-d4a8-4240-91a3-4511cd4e81cf">
 
-Print result with command 'p'.                                                                        
-<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment1-Console-Editor/assets/115981919/f56348a6-ab90-4a17-ab18-90515ff8012c">
+Print result with command 'p'. As you can see program have cursor and all logic based on it.
+<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/a50892d4-d611-48e2-b5f9-b70ddb3ff5a2">
 
-Insert the random text to the start using the 'i' command and line '0' and row '0'. Print result with command 'p'.
-<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment1-Console-Editor/assets/115981919/4132234d-d0a4-450b-a0c8-4b1477c2a13a">
+Insert the random text to the start using the 'i' and cursor movement with 'm'. Print result with command 'p'.
+<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/142e27a0-0c50-4630-9e78-e14465254167">
 
 Save result to 'MyText.txt' file using the 's' command.
-<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment1-Console-Editor/assets/115981919/08ff6505-81fe-4cc8-8830-69010fa11ce5">
+<img width="675" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/f53a21ff-09c4-45ea-9ee9-bb9d75ddeb15">
 
 Open the file with Notepad.
-<img width="1073" alt="image" src="https://github.com/Tabatskyi/Assignment1-Console-Editor/assets/115981919/205397c9-5136-4c7a-afb3-5ffe00b4f2b6">
+<img width="1073" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/7db23788-6eb6-4d25-9951-0a752e2781fa">
 
-Load the sherlock.txt file with command 'l'. Print result with command 'p'. The program features dynamic memory array, so we expect resizing of memory.  
+Load the sherlock.txt file with command 'l'. Print result with command 'p'. The program features dynamic memory array, so we expect resizing of memory.    
+<img width="472" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/0724a455-f15d-4ded-8847-8d8c5cc2756f">
 <img width="475" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/09a69b5d-70bb-47b0-ad54-116827e1751c">
 
-Move cursor to one line up using 'm' command and then 'w'. Insert the random text to the line '1123' and random row using the 'i' command.
+Move cursor to one line up using 'm' command and then 'w'. Insert the random text using the 'i' command.
 <img width="475" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/0bd7ffa0-8167-4386-acbe-5da142cb4af1">
 <img width="475" alt="image" src="https://github.com/Tabatskyi/Assignment2_Console_Editor_Advanced/assets/115981919/f8f11fd4-be05-4b12-83a3-7e8d2d4720d3">
 
