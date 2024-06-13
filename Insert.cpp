@@ -44,5 +44,4 @@ void Insert::Undo(Memory* memory)
 {
 	Delete* deleteCommand = new Delete(line, index, strlen(text));
 	deleteCommand->Do(memory);
-    delete deleteCommand;
 }

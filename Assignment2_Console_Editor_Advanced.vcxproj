@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Append.cpp" />
     <ClCompile Include="Copy.cpp" />
+    <ClCompile Include="Coursor.cpp" />
     <ClCompile Include="Cut.cpp" />
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Memory.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Append.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Copy.h" />
+    <ClInclude Include="Coursor.h" />
     <ClInclude Include="Cut.h" />
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Insert.h" />

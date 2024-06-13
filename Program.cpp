@@ -9,6 +9,18 @@
 #include "Cut.h"
 #include "Paste.h"
 #include "Replace.h"
+#include "Coursor.h"
+
+
+static bool validatePosition(unsigned int line, unsigned int index, Memory* memory)
+{
+	if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
+	{
+		printf("Error: Index out of range");
+		return false;
+	}
+	return true;
+}
 
 
 int main()
@@ -65,11 +77,8 @@ int main()
             printf(">Choose line and index: ");
             (void)scanf("%u %u", &line, &index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
+            if (!validatePosition(line, index, memory))
                 continue;
-            }
 
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
@@ -93,17 +102,12 @@ int main()
             printf(">Choose line, index and symbols count: ");
             (void)scanf("%u %u %u", &line, &index, &symbolsCount);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
+            if (!validatePosition(line, index, memory))
                 continue;
-            }
-            else
-            {
-                Delete* deleteCommand = new Delete(line, index, symbolsCount);
-                deleteCommand->Do(memory);
-                memory->saveCommand(deleteCommand);
-            }
+            
+            Delete* deleteCommand = new Delete(line, index, symbolsCount);
+            deleteCommand->Do(memory);
+            memory->saveCommand(deleteCommand);
         }
         else if (command == 'u')
         {
@@ -135,11 +139,8 @@ int main()
             printf(">Choose line, index and symbols count: ");
             (void)scanf("%u %u %u", &line, &index, &symbolsCount);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
+            if (!validatePosition(line, index, memory))
                 continue;
-            }
             
             Cut* cut = new Cut(line, index, symbolsCount);
             cut->Do(memory);
@@ -152,15 +153,11 @@ int main()
             printf(">Choose line, index and symbols count: ");
             (void)scanf("%u %u %u", &line, &index, &symbolsCount);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
+            if (!validatePosition(line, index, memory))
                 continue;
-            }
 
             Copy* copy = new Copy(line, index, symbolsCount);
             copy->Do(memory);
-            memory->saveCommand(copy);
         }
         else if (command == 'v')
         {
@@ -169,11 +166,8 @@ int main()
             printf(">Choose line and index: ");
             (void)scanf("%u %u", &line, &index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
+            if (!validatePosition(line, index, memory))
                 continue;
-            }
 
             Paste* paste = new Paste(line, index);
             paste->Do(memory);
@@ -187,11 +181,8 @@ int main()
             printf(">Choose line and index: ");
             (void)scanf("%u %u", &line, &index);
 
-            if (line >= memory->currentLinesNum || index >= memory->currentLengthNum)
-            {
-                printf("Error: Index out of range");
+            if(!validatePosition(line, index, memory))
                 continue;
-            }
 
             printf(">Enter text to insert: ");
             (void)scanf(" %[^\n]", inputBuffer);
